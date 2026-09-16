@@ -3,6 +3,15 @@
   padding: 0 auto;
   font-family: sans-serif;
 }
+main {
+  margin-top: 10vh;
+}
+.flex-ver{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 /* HEADER */
 header {
@@ -61,4 +70,34 @@ header div{
   background-color: #fff;
   filter: invert(0);
   cursor: pointer;
+}
+
+/* WEATHER VIEW */
+.weather-view{
+  width: 100%;
+}
+.weather-view-temperature{
+  font-size: 80px;
+}
+.weather-view-temperature-symbols{
+  font-size: 32px;
+  margin-right: 5%;
+}
+.weather-view-cityname {
+  font-size: 42px;
+}
+
+/* CLEAN VIEW */
+.clean-view{
+  margin-left: 33%;
+  margin-right: 33%;
+}
+.clean-view img{
+  width: 70px;
+  height: 70px;
+  margin-right: 5%;
+  object-fit: contain;
+}
+.clean-view div{
+  max-width: 70%;
 }
