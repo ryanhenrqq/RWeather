@@ -9,22 +9,31 @@ import { useState } from 'react'
 
 function App() {
   const [loading, setLoading] = useState(false)
+  const [weatherview, setWeatherview] = useState(false)
+  const [errStatus, setErrStatus] = useState('')
 
   const [temperature, setTemperature] = useState(22)
   const [mintemp, setMintemp] = useState(19)
   const [maxtemp, setMaxtemp] = useState(24)
   const [feelslike, setFeelslike] = useState(21)
   const [cityName, setCityName] = useState('City Test')
+  const [countryName, setCountryName] = useState('City Test')
   const [cityTime, setCityTime] = useState('')
+  const [description, setDescription] = useState('')
 
   const handleFetch = async (city: string) => {
     setLoading(true)
+    setErrStatus('')
     try { 
       const res = await fetch(`https://rweather-alpha.vercel.app/api/weather?city=${encodeURIComponent(city)}`)
       if (!res.ok) {
-        throw new Error ("Cidade não encontrada")
+        const errData = await res.json()
+        throw new Error(errData.error || 'Cidade não encontrada.');
       }
       const data: WeatherData = await res.json()
+      if (data.cod === '404') {
+        throw new Error('Cidade não encontrada');
+      }
       console.log("bem-sucedido", data)
       setTemperature(Math.trunc(data.main.temp))
       setMaxtemp(Math.trunc(data.main.temp_max))
@@ -32,22 +41,46 @@ function App() {
       setFeelslike(Math.trunc(data.main.feels_like))
       setCityName(data.name)
       setCityTime(getCityTime(data.timezone))
-    } catch (err) {
+      setCountryName(data.sys.country)
+      setDescription(data.weather[0].description)
+      setWeatherview(true)
+    } catch (err: any) {
       console.error(err)
+      setErrStatus(String(err))
+    } finally {
+      setLoading(false)
     }
+  }
+
+  const handleClear = () => {
+    setLoading(false)
+    setWeatherview(false)
+
+    setTemperature(22)
+    setMintemp(19)
+    setMaxtemp(24)
+    setFeelslike(21)
+    setCityName('Waiting City')
+    setCityTime('')
+    setCountryName('')
+    setDescription('')
   }
   return (
     <>
-      <Header onSearch={handleFetch} />
+      <Header onBack={handleClear} onSearch={handleFetch} error={errStatus} />
       <main>
-        {!loading ? <CleanView /> : 
+        {weatherview ? 
               <WeatherView cityname={cityName}
                     timelocal={cityTime}
                     temperature={temperature}
                     mintemp={mintemp}
                     maxtemp={maxtemp}
                     feelslike={feelslike}
-          />}
+                    country={countryName}
+                    description={description}
+          /> :
+          !loading ? <CleanView /> : <LoadingInfos />
+        }
         <footer className='flex-ver'>
           <b>Images Atributes here:</b>
           <ul>
@@ -64,7 +97,7 @@ function App() {
   )
 }
 
-function Header({onSearch}: HeaderFunction) {
+function Header({onSearch, onBack, error}: HeaderFunction) {
   const [city, setCity] = useState('')
   const handleSearch = () => {
     console.log("click - header")
@@ -78,12 +111,15 @@ function Header({onSearch}: HeaderFunction) {
           <img src="/favicon.png" alt="Logo" />
           <h1>RWeather</h1>
         </div>
-        <div className="middle-side-header flex-hor-align">
-          <input type="text" name="search-bar" placeholder='Buscar cidades...' value={city} onChange={(e) => setCity(e.target.value)} />
-          <img src={searchIcon} alt="Pesquisar" onClick={handleSearch} />
+        <div className="middle-side-header flex-ver">
+          <div className="flex-hor-align">
+            <input type="text" name="search-bar" placeholder='Buscar cidades...' value={city} onChange={(e) => setCity(e.target.value)} />
+            <img src={searchIcon} alt="Pesquisar" onClick={handleSearch} />
+          </div>
+          {error==''?<span></span>:<small style={{color:'red'}}>Cidade nao encontrada</small>}
         </div>
         <div className="right-side-header flex-hor-align">
-          <img src={backIcon} alt="Voltar" />
+          <img src={backIcon} alt="Voltar" onClick={onBack} />
           <img src={infoIcon} alt="Info" />
         </div>
       </header>
@@ -105,7 +141,21 @@ function CleanView() {
   )
 }
 
-function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike}: WeatherViewInfos) {
+function LoadingInfos() {
+  return(
+    <>
+      <div className="flex-hor-align clean-view">
+        <img src={searchIcon} alt="Pesquisa" />
+        <div className="flex-ver">
+          <h3>Pesquisando</h3>
+          <p>Aguarde um pouco.</p>
+        </div>
+      </div>
+    </>  
+  )
+}
+
+function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description}: WeatherViewInfos) {
   return(
     <>
       <div className="flex-ver weather-view">
@@ -130,7 +180,7 @@ function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelsl
           <div className="flex-ver">
             <h3 className='weather-view-cityname'>{cityname}</h3>
             <div className="flex-hor-align" style={{width: '100%'}}>
-              <b style={{textAlign: 'left', width: '100%'}}>{timelocal}</b>
+              <b style={{textAlign: 'left', width: '100%'}}>{timelocal} - {country} - {description}</b>
             </div>
           </div>
         </div>

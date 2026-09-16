@@ -1,6 +1,7 @@
 export interface WeatherData{
     name: string,
     timezone: number,
+    cod: string,
     main: {
         temp: number,
         feels_like: number,
@@ -12,20 +13,27 @@ export interface WeatherData{
         description: string,
         icon: string,
     }>
+    sys: {
+        country: string
+    }
     wind: {
         speed: number,
     };
 }
 
 export interface HeaderFunction{
-    onSearch: (city: string) => void
+    onSearch: (city: string) => void,
+    onBack: () => void,
+    error: string
 }
 
 export interface WeatherViewInfos{
     cityname: string,
-    timelocal: string
+    timelocal: string,
+    description: string,
     temperature: number,
     mintemp: number,
     maxtemp: number,
-    feelslike: number
+    feelslike: number,
+    country: string
 }
