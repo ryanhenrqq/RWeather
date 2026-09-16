@@ -5,12 +5,11 @@ import type { WeatherViewInfos, HeaderFunction, WeatherData } from './types/type
 import searchIcon from './assets/search.png'
 import backIcon from './assets/arrow.png'
 import infoIcon from './assets/info.png'
-import { use, useState } from 'react'
+import { useState } from 'react'
 
 function App() {
   const [loading, setLoading] = useState(false)
 
-  const [weather, setWeather] = useState<WeatherData | null>(null)
   const [temperature, setTemperature] = useState(22)
   const [mintemp, setMintemp] = useState(19)
   const [maxtemp, setMaxtemp] = useState(24)
@@ -20,7 +19,6 @@ function App() {
 
   const handleFetch = async (city: string) => {
     setLoading(true)
-
     try { 
       const res = await fetch(`https://rweather-alpha.vercel.app/api/weather?city=${encodeURIComponent(city)}`)
       if (!res.ok) {
@@ -29,29 +27,27 @@ function App() {
       const data: WeatherData = await res.json()
       console.log("bem-sucedido", data)
       setTemperature(Math.trunc(data.main.temp))
+      setMaxtemp(Math.trunc(data.main.temp_max))
+      setMintemp(Math.trunc(data.main.temp_min))
       setFeelslike(Math.trunc(data.main.feels_like))
       setCityName(data.name)
       setCityTime(getCityTime(data.timezone))
     } catch (err) {
       console.error(err)
-    } finally {
-      setLoading(false)
     }
-    
-    
   }
   return (
     <>
       <Header onSearch={handleFetch} />
       <main>
-        <CleanView />
-        <WeatherView cityname={cityName}
+        {!loading ? <CleanView /> : 
+              <WeatherView cityname={cityName}
                     timelocal={cityTime}
                     temperature={temperature}
                     mintemp={mintemp}
                     maxtemp={maxtemp}
                     feelslike={feelslike}
-          />
+          />}
         <footer className='flex-ver'>
           <b>Images Atributes here:</b>
           <ul>
@@ -113,7 +109,7 @@ function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelsl
   return(
     <>
       <div className="flex-ver weather-view">
-        <div className="flex-hor-align">
+        <div className="flex-hor-align weather-view-top">
           <div className="flex-ver">
             <div className='flex-hor-align'>
               <b className='weather-view-temperature'>{temperature}</b>
@@ -122,19 +118,19 @@ function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelsl
                 <b>C</b>
               </div>
               <div className="flex-ver weather-view-temperature-symbols">
-                <b>{maxtemp}°</b>
-                <b>{mintemp}°</b>
+                <b>+{maxtemp}°</b>
+                <b>-{mintemp}°</b>
               </div>
             </div>
-            <div>
-              <b>Sensação de {feelslike}°</b>
+            <div style={{width: '100%'}}>
+              <b style={{textAlign: 'left', width: '100%'}}>Sensação de {feelslike}°</b>
             </div>
           </div>
-          
+
           <div className="flex-ver">
             <h3 className='weather-view-cityname'>{cityname}</h3>
-            <div className="flex-hor-align">
-              <b>{timelocal}</b>
+            <div className="flex-hor-align" style={{width: '100%'}}>
+              <b style={{textAlign: 'left', width: '100%'}}>{timelocal}</b>
             </div>
           </div>
         </div>
