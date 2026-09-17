@@ -173,6 +173,7 @@ function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelsl
                 <b>-{mintemp}°</b>
               </div>
             </div>
+            
             <div style={{width: '100%'}}>
               <b style={{textAlign: 'left', width: '100%'}}>Sensação de {feelslike}°</b>
             </div>
@@ -184,6 +185,7 @@ function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelsl
               <b style={{textAlign: 'left', width: '100%'}}>{timelocal} - {country} - {description}</b>
             </div>
           </div>
+
         </div>
 
       </div>
