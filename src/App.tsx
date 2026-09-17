@@ -2,6 +2,7 @@ import './App.css'
 
 import type { WeatherViewInfos, HeaderFunction, WeatherData } from './types/types'
 
+import logo from '/public/favicon.png'
 import searchIcon from './assets/search.png'
 import backIcon from './assets/arrow.png'
 import infoIcon from './assets/info.png'
@@ -108,7 +109,7 @@ function Header({onSearch, onBack, error}: HeaderFunction) {
     <>
       <header>
         <div className="left-side-header flex-hor-align">
-          <img src="/favicon.png" alt="Logo" />
+          <img src={logo} alt="Logo" />
           <h1>RWeather</h1>
         </div>
         <div className="middle-side-header flex-ver">

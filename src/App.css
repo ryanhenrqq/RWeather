@@ -109,3 +109,54 @@ header div{
 footer{
   margin-top: 3%;
 }
+
+@media (max-width: 768px) {
+  header div{
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  .left-side-header h1{
+    display: none;
+  }
+  .left-side-header img{
+    width: 18px;
+    height: 18px;
+  }
+  .middle-side-header input{
+    width: 8rem;
+  }
+  .middle-side-header img{
+    width: 18px;
+    height: 18px;
+  }
+  .right-side-header{
+    gap: 12px;
+  }
+  .right-side-header img{
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+  }
+  footer a, footer b{
+    font-size: 9px;
+  }
+
+  .clean-view {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  .clean-view img {
+    width: 50px;
+    height: 50px;
+  }
+  .clean-view div h3{
+    font-size: 14px;
+  }
+  .clean-view div p{
+    font-size: 13px;
+  }
+
+  .weather-view-top{
+    flex-direction: column;
+  }
+}
