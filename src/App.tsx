@@ -1,11 +1,10 @@
 import './App.css'
 
-import type { WeatherViewInfos, HeaderFunction, WeatherData } from './types/types'
+import type { WeatherData } from './types/types'
+import { Header } from './components/header/header'
+import { CleanView, WeatherView, LoadingInfos } from './components/view/mainview'
+import { Attributes } from './components/attributes/attributes'
 
-import logo from '/public/favicon.png'
-import searchIcon from './assets/search.png'
-import backIcon from './assets/arrow.png'
-import infoIcon from './assets/info.png'
 import { useState } from 'react'
 
 function App() {
@@ -13,12 +12,12 @@ function App() {
   const [weatherview, setWeatherview] = useState(false)
   const [errStatus, setErrStatus] = useState('')
 
-  const [temperature, setTemperature] = useState(22)
-  const [mintemp, setMintemp] = useState(19)
-  const [maxtemp, setMaxtemp] = useState(24)
-  const [feelslike, setFeelslike] = useState(21)
-  const [cityName, setCityName] = useState('City Test')
-  const [countryName, setCountryName] = useState('City Test')
+  const [temperature, setTemperature] = useState(0)
+  const [mintemp, setMintemp] = useState(0)
+  const [maxtemp, setMaxtemp] = useState(0)
+  const [feelslike, setFeelslike] = useState(0)
+  const [cityName, setCityName] = useState('')
+  const [countryName, setCountryName] = useState('')
   const [cityTime, setCityTime] = useState('')
   const [description, setDescription] = useState('')
 
@@ -57,11 +56,11 @@ function App() {
     setLoading(false)
     setWeatherview(false)
 
-    setTemperature(22)
-    setMintemp(19)
-    setMaxtemp(24)
-    setFeelslike(21)
-    setCityName('Waiting City')
+    setTemperature(0)
+    setMintemp(0)
+    setMaxtemp(0)
+    setFeelslike(0)
+    setCityName('')
     setCityTime('')
     setCountryName('')
     setDescription('')
@@ -82,117 +81,12 @@ function App() {
           /> :
           !loading ? <CleanView /> : <LoadingInfos />
         }
-        <footer className='flex-ver'>
-          <b>Images Atributes here:</b>
-          <ul>
-            <li><a href="https://www.flaticon.com/free-icons/sun" title="sun icons">Sun icons created by Good Ware - Flaticon</a></li>
-            <li><a href="https://www.flaticon.com/free-icons/magnifying-glass" title="magnifying glass icons">Magnifying glass icons created by Royyan Wijaya - Flaticon</a></li>
-            <li><a href="https://www.flaticon.com/free-icons/info" title="info icons">Info icons created by Magnific - Flaticon</a></li>
-            <li><a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Magnific - Flaticon</a></li>
-            <li><a href="https://www.flaticon.com/free-icons/arrow" title="arrow icons">Arrow icons created by Kirill Kazachek - Flaticon</a></li>
-          </ul>
-        </footer>
+        <Attributes />
       </main>
       
     </>
   )
 }
-
-function Header({onSearch, onBack, error}: HeaderFunction) {
-  const [city, setCity] = useState('')
-  const handleSearch = () => {
-    console.log("click - header")
-    if (!city.trim()) return
-    onSearch(city)
-  }
-  return (
-    <>
-      <header>
-        <div className="left-side-header flex-hor-align">
-          <img src={logo} alt="Logo" />
-          <h1>RWeather</h1>
-        </div>
-        <div className="middle-side-header flex-ver">
-          <div className="flex-hor-align">
-            <input type="text" name="search-bar" placeholder='Buscar cidades...' value={city} onChange={(e) => setCity(e.target.value)} />
-            <img src={searchIcon} alt="Pesquisar" onClick={handleSearch} />
-          </div>
-          {error==''?<span></span>:<small style={{color:'red'}}>Cidade nao encontrada</small>}
-        </div>
-        <div className="right-side-header flex-hor-align">
-          <img src={backIcon} alt="Voltar" onClick={onBack} />
-          <img src={infoIcon} alt="Info" />
-        </div>
-      </header>
-    </>
-  )
-}
-
-function CleanView() {
-  return (
-    <>
-      <div className="flex-hor-align clean-view">
-        <img src={searchIcon} alt="Pesquisa" />
-        <div className="flex-ver">
-          <h3>Comece pesquisando a sua cidade</h3>
-          <p>Use o campo de pesquisa acima.</p>
-        </div>
-      </div>
-    </>
-  )
-}
-
-function LoadingInfos() {
-  return(
-    <>
-      <div className="flex-hor-align clean-view">
-        <img src={searchIcon} alt="Pesquisa" />
-        <div className="flex-ver">
-          <h3>Pesquisando</h3>
-          <p>Aguarde um pouco.</p>
-        </div>
-      </div>
-    </>  
-  )
-}
-
-function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description}: WeatherViewInfos) {
-  return(
-    <>
-      <div className="flex-ver weather-view">
-        <div className="flex-hor-align weather-view-top">
-          <div className="flex-ver">
-            <div className='flex-hor-align'>
-              <b className='weather-view-temperature'>{temperature}</b>
-              <div className="flex-ver weather-view-temperature-symbols">
-                <b>O</b>
-                <b>C</b>
-              </div>
-              <div className="flex-ver weather-view-temperature-symbols">
-                <b>+{maxtemp}°</b>
-                <b>-{mintemp}°</b>
-              </div>
-            </div>
-            
-            <div style={{width: '100%'}}>
-              <b style={{textAlign: 'left', width: '100%'}}>Sensação de {feelslike}°</b>
-            </div>
-          </div>
-
-          <div className="flex-ver">
-            <h3 className='weather-view-cityname'>{cityname}</h3>
-            <div className="flex-hor-align" style={{width: '100%'}}>
-              <b style={{textAlign: 'left', width: '100%'}}>{timelocal} - {country} - {description}</b>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </>
-  )
-}
-
 export function getCityTime(timezoneOffsetInSeconds: number): string {
   const now = new Date();
   const localOffsetInMs = now.getTimezoneOffset() * 60 * 1000;
