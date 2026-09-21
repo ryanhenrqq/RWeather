@@ -95,15 +95,14 @@ header div{
         width: 8rem;
     }
     .middle-side-header img{
-        width: 18px;
-        height: 18px;
+        display: none;
     }
     .right-side-header{
         gap: 12px;
     }
     .right-side-header img{
-        width: 16px;
-        height: 16px;
+        width: 13px;
+        height: 13px;
         padding: 4px;
     }
 }
