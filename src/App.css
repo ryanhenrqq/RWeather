@@ -3,19 +3,11 @@
   padding: 0 auto;
   font-family: sans-serif;
 }
-main {
-  margin-top: 10vh;
-}
 .flex-ver{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-/* FOOTER */
-footer{
-  margin-top: 3%;
 }
 
 @media (max-width: 768px) {

@@ -8,6 +8,7 @@ export function Attributes() {
             <li><a href="https://www.flaticon.com/free-icons/info" title="info icons">Info icons created by Magnific - Flaticon</a></li>
             <li><a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Magnific - Flaticon</a></li>
             <li><a href="https://www.flaticon.com/free-icons/arrow" title="arrow icons">Arrow icons created by Kirill Kazachek - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/close" title="close icons">Close icons created by ariefstudio - Flaticon</a></li>
           </ul>
         </footer>
     )

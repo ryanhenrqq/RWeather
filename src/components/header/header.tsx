@@ -7,15 +7,21 @@ import homeIcon from '../../assets/home.png'
 import infoIcon from '../../assets/info.png'
 import logo from '/public/favicon.png'
 import searchIcon from '../../assets/search.png'
+import closeIcon from '../../assets/close.png'
+import { Attributes } from '../attributes/attributes'
 
 export function Header({onSearch, onBack, error}: HeaderFunction) {
   const [city, setCity] = useState('')
+  const [infosView, setInfosView] = useState(false)
 
   const handleSearch = () => {
     console.log("click - header")
     if (!city.trim()) return
     console.log(city)
     onSearch(city)      // descobrir como limpar o campo de pesquisa apos a funçao dar certo sem afetar aqui!!
+  }
+  const handleInfosView = () => {
+    !infosView?setInfosView(true):setInfosView(false)
   }
 
   return (
@@ -42,17 +48,19 @@ export function Header({onSearch, onBack, error}: HeaderFunction) {
         </div>
         <div className="right-side-header flex-hor-align">
           <img src={homeIcon} alt="Voltar" onClick={onBack} />
-          <img src={infoIcon} alt="Info" />
+          <img src={!infosView?infoIcon:closeIcon} alt="Info" onClick={handleInfosView} />
         </div>
       </header>
-      <InfosAbout />
+      {infosView?<InfosAbout />:null}
     </>
   )
 }
 
 function InfosAbout() {
     return(
-        <>
-        </>
+        <div className="info-tab">
+            <Attributes />
+            <b>Criado por Ryan Henrique</b>
+        </div>
     )
 }

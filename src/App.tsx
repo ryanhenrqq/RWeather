@@ -3,7 +3,6 @@ import './App.css'
 import type { WeatherData } from './types/types'
 import { Header } from './components/header/header'
 import { CleanView, WeatherView, LoadingInfos } from './components/view/mainview'
-import { Attributes } from './components/attributes/attributes'
 
 import { useState } from 'react'
 
@@ -87,7 +86,6 @@ function App() {
           /> :
           !loading ? <CleanView /> : <LoadingInfos />
         }
-        <Attributes />
       </main>
       
     </>

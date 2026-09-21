@@ -57,6 +57,28 @@ header div{
   cursor: pointer;
 }
 
+/* INFO TAB */
+.info-tab{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 18rem;
+    height: 20rem;
+    position: fixed;
+    top: 70px;
+    right: 30px;
+    padding: 10px;
+    background-color: #212121a9;
+    color: #fff;
+    border: solid 1px black;
+    border-radius: 32px;
+    z-index: 2;
+}
+.info-tab a{
+    color: #fff;
+}
+
 @media (max-width: 768px) {
     header div{
         margin-left: 10%;
