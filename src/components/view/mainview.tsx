@@ -28,7 +28,7 @@ export function CleanView({onSearch}: CleanViewNames) {
             <div className="flex-hor-align clean-view">
                 <img src={officeIcon} alt="Prédio" loading='lazy' />
                 <div className="flex-ver">
-                    <h3>Comece pesquisando a sua cidade</h3>
+                    <h3>Comece pesquisando a sua cidade.</h3>
                     <p>Use o campo de pesquisa acima.</p>
                 </div>
             </div>
