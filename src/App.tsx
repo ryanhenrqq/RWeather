@@ -20,6 +20,8 @@ function App() {
   const [countryName, setCountryName] = useState('')
   const [cityTime, setCityTime] = useState('')
   const [description, setDescription] = useState('')
+  const [windSpeed, setWindSpeed] = useState(0)
+  const [humidity, setHumidity] = useState(0)
 
   const handleFetch = async (city: string) => {
     setLoading(true)
@@ -43,6 +45,8 @@ function App() {
       setCityTime(getCityTime(data.timezone))
       setCountryName(data.sys.country)
       setDescription(data.weather[0].description)
+      setHumidity(data.main.humidity)
+      setWindSpeed(Math.trunc(data.wind.speed))
       setWeatherview(true)
     } catch (err: any) {
       console.error(err)
@@ -78,6 +82,8 @@ function App() {
                     feelslike={feelslike}
                     country={countryName}
                     description={description}
+                    humidity={humidity}
+                    windspeed={windSpeed}
           /> :
           !loading ? <CleanView /> : <LoadingInfos />
         }

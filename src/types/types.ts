@@ -35,5 +35,7 @@ export interface WeatherViewInfos{
     mintemp: number,
     maxtemp: number,
     feelslike: number,
-    country: string
+    country: string,
+    humidity: number,
+    windspeed: number
 }

@@ -31,7 +31,7 @@ export function LoadingInfos() {
   )
 }
 
-export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description}: WeatherViewInfos) {
+export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description, humidity, windspeed}: WeatherViewInfos) {
   return(
     <>
       <div className="flex-ver weather-view">
@@ -54,10 +54,18 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
             </div>
           </div>
 
-          <div className="flex-ver">
-            <h3 className='weather-view-cityname'>{cityname}</h3>
+          <div className="flex-ver" style={{width: '100%'}}>
+            <h3 className='weather-view-cityname' style={{textAlign: 'left', width: '100%'}}>{description}</h3>
             <div className="flex-hor-align" style={{width: '100%'}}>
-              <b style={{textAlign: 'left', width: '100%'}}>{timelocal} - {country} - {description}</b>
+              <b style={{textAlign: 'left', width: '100%'}}><b>{timelocal}</b> - {cityname} - {country}</b>
+            </div>
+            <div className="flex hor-align" style={{width: '100%'}}>
+                <b style={{textAlign: 'left', width: '100%'}}>Humidade: {humidity}%&nbsp;-&nbsp;
+                {humidity>45?<span>Alto</span>:<span>Baixo</span>}</b>
+            </div>
+            <div className="flex-hor-align" style={{width: '100%'}}>
+                <b style={{textAlign: 'left', width: '100%'}}>Força do vento: {windspeed} km/h&nbsp;{windspeed>20?<span>(Forte)</span>:<span>(Leve)</span>}</b>
+                
             </div>
           </div>
 
