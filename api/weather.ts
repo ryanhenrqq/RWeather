@@ -6,9 +6,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { city, lat, lon } = req.query;
   const apiKey = process.env.WEATHER_API_KEY;
 
-  if (!city || typeof city !== 'string') {
-    return res.status(400).json({ error: 'Cidade inválida ou não informada' });
-  }
+  //if (!city || typeof city !== 'string') {
+  //  return res.status(400).json({ error: 'Cidade inválida ou não informada' });
+  //}
 
   try {
     let apiUrl = ''

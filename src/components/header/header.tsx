@@ -14,9 +14,7 @@ export function Header({onSearch, onBack, error}: HeaderFunction) {
   const [city, setCity] = useState('')
   const [infosView, setInfosView] = useState(false)
   // AS LINHAS IGNORADAS ABAIXO FORAM APENAS PRA CONSEGUIR FAZER O COMMIT E ATUALIZAR A API NO VERCER (MUDANÇAS DO WEATHER.TS PRA ACEITAR LATITUDE E LONGITUDE)
-  //const [loading, setLoading] = useState(false)
-  //const [coordLat, setCoordLat] = useState(0)
-  //const [coordLon, setCoordLon] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const handleSearch = () => {
     console.log("click - header")
@@ -28,28 +26,46 @@ export function Header({onSearch, onBack, error}: HeaderFunction) {
     !infosView?setInfosView(true):setInfosView(false)
   }
 
-  //const handleGeolocationSearch = async() => {
-  //  setLoading(true)
-  //  try {
-  //      const res = await fetch(``)
-  //  }
-  //}
+  const handleGeolocationSearch = async(lat: number, lon: number) => {
+    setLoading(true)
+    console.log(lat, lon)
+    try {
+        const res = await fetch(`https://rweather-alpha.vercel.app/api/weather?lat=${lat}&lon=${lon}`)
+        if (!res.ok){
+            const errData = await res.json()
+            throw new Error(errData.error || 'essas coords não foram encontradas')
+        }
+        const data = await res.json()
+        console.log(data)
+    } catch (err: any) {
+        console.error(err)
+    } finally {
+        setLoading(false)
+    }
+    }
 
-  useEffect(() => {
-    if (navigator.geolocation) { //fins de testes, objetivo de pesquisar sozinho ao entrar no site
-        navigator.geolocation.getCurrentPosition((pos) => {
+    useEffect(() => {
+        if (navigator.geolocation) { //fins de testes, objetivo de pesquisar sozinho ao entrar no site
+            navigator.geolocation.getCurrentPosition((pos) => {
             const lat = pos.coords.latitude
             const lon = pos.coords.longitude
-            //setCoordLat(lat)
-            //setCoordLon(lon)
             console.log(`Latitude: ${lat}, Longitude: ${lon}`)
+            handleGeolocationSearch(lat, lon)
         }, (error) => {
             console.error(`Erro ao conseguir geoloc: ${error}`)
         })
     } else {
         console.log('Geolocation não suportado!')
     }
-  }, [])
+    }, [])
+
+    useEffect(() => {
+        if (loading) {
+            console.log("Carregando pesquisa por geolocalização.")
+        } else {
+            console.log("Pesquisa por geolocalização parada.")
+        }
+    }, [loading])
 
   return (
     <>
