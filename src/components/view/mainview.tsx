@@ -24,7 +24,7 @@ export function CleanView({onSearch}: CleanViewNames) {
 
   return (
     <>
-        <div className="flex-ver clean-view-top">
+        <div className="clean-view-top">
             <div className="flex-hor-align clean-view">
                 <img src={officeIcon} alt="Prédio" loading='lazy' />
                 <div className="flex-ver">
@@ -32,7 +32,7 @@ export function CleanView({onSearch}: CleanViewNames) {
                     <p>Use o campo de pesquisa acima.</p>
                 </div>
             </div>
-            <div className="flex-hor-align clean-view">
+            <div className="flex-hor-align clean-view-recent">
                 <img src={historyIcon} style={{filter: 'invert(1)'}} alt="Histórico" loading='lazy' />
                 <div className="flex-ver">
                     <h3>Pesquisas recentes</h3>
@@ -54,7 +54,7 @@ export function CleanView({onSearch}: CleanViewNames) {
 export function LoadingInfos() {
   return(
     <>
-      <div className="flex-hor-align clean-view">
+      <div className="flex-hor-align clean-view-top">
         <div className='loading-spinner'></div>
         <div className="flex-ver">
           <h3>Pesquisando</h3>
@@ -70,7 +70,7 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
     <>
       <div className="flex-ver weather-view">
         <div className="flex-hor-align weather-view-top">
-          <div className="flex-ver">
+          <div className="flex-ver weather-view-left">
             <div className='flex-hor-align'>
               <b className='weather-view-temperature'>{temperature}</b>
               <div className="flex-ver weather-view-temperature-symbols">
@@ -88,7 +88,7 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
             </div>
           </div>
 
-          <div className="flex-ver" style={{width: '100%'}}>
+          <div className="flex-ver city-infos-view" style={{width: '100%'}}>
             <h3 className='weather-view-cityname' style={{textAlign: 'left', width: '100%'}}>{description}</h3>
             <div className="flex-hor-align" style={{width: '100%'}}>
               <b style={{textAlign: 'left', width: '100%'}}><b>{timelocal}</b> - {cityname} - {country}</b>
