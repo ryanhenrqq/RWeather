@@ -39,3 +39,7 @@ export interface WeatherViewInfos{
     humidity: number,
     windspeed: number
 }
+
+export interface CleanViewNames{
+    onSearch: (city: string) => void
+}

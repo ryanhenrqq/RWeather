@@ -27,10 +27,12 @@ main {
 
 /* CLEAN VIEW */
 .clean-view{
+    display: flex;
+    align-items: center;
+    width: 25rem;
+    height: 10rem;
     padding-left: 12px;
     padding-right: 12px;
-    padding-top: 18px;
-    padding-bottom: 18px;
     margin-left: 33%;
     margin-right: 33%;
     border: solid 1px black;
@@ -39,11 +41,13 @@ main {
 .clean-view img{
     width: 70px;
     height: 70px;
-    margin-right: 5%;
+    margin-right: auto;
     object-fit: contain;
 }
 .clean-view div{
-  max-width: 70%;
+    margin-right: auto;
+    text-align: left;
+    max-width: 100%;
 }
 .loading-spinner{
     width: 70px;
@@ -53,6 +57,19 @@ main {
     border-radius: 50%;
     margin-right: 18px;
     animation: spin 0.8s linear infinite;
+}
+
+/* RECENT SEARCHES */
+.recent-li{
+    list-style: none;
+    text-decoration: none;
+    font-weight: bolder;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    width: 100%;
+    border: solid 1px black;
+    border-radius: 24px;
 }
 
 /* ANIMAÇÕES */

@@ -1,18 +1,52 @@
 import './mainview.css'
 
-import type { WeatherViewInfos } from '../../types/types'
+import type { WeatherViewInfos, CleanViewNames } from '../../types/types'
 import officeIcon from '../../assets/office-building.png'
+import historyIcon from '../../assets/history.png'
+import { useEffect, useState } from 'react'
 
-export function CleanView() {
+export function CleanView({onSearch}: CleanViewNames) {
+    const [recentSearch, setRecentSearch] = useState<string[]>([])
+
+    const handleSearch = (city: string) => {
+        console.log("click - cleanview history")
+        if (!city.trim()) return
+        console.log(city)
+        onSearch(city)      // descobrir como limpar o campo de pesquisa apos a funçao dar certo sem afetar aqui!!
+    }
+
+    useEffect(() => {
+        const LastSearches = localStorage.getItem('cities-storage')
+        if (LastSearches) {
+            setRecentSearch(JSON.parse(LastSearches))
+        }
+    }, [])
+
   return (
     <>
-      <div className="flex-hor-align clean-view">
-        <img src={officeIcon} alt="Prédio" loading='lazy' />
         <div className="flex-ver">
-          <h3>Comece pesquisando a sua cidade</h3>
-          <p>Use o campo de pesquisa acima.</p>
+            <div className="flex-hor-align clean-view">
+                <img src={officeIcon} alt="Prédio" loading='lazy' />
+                <div className="flex-ver">
+                    <h3>Comece pesquisando a sua cidade</h3>
+                    <p>Use o campo de pesquisa acima.</p>
+                </div>
+            </div>
+            <div className="flex-hor-align clean-view">
+                <img src={historyIcon} alt="Histórico" loading='lazy' />
+                <div className="flex-ver">
+                    <h3>Pesquisas recentes</h3>
+                    {
+                        recentSearch.map((city, index) => (
+                            <li key={index} className='recent-li' onClick={() => handleSearch(city)}>
+                                {city}
+                            </li>
+                        ))
+                    }
+                </div>
+            </div>
         </div>
-      </div>
+      
     </>
   )
 }

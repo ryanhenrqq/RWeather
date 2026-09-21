@@ -48,12 +48,21 @@ function App() {
       setHumidity(data.main.humidity)
       setWindSpeed(Math.trunc(data.wind.speed))
       setWeatherview(true)
+      saveRecentSearches(data.name)
     } catch (err: any) {
       console.error(err)
       setErrStatus(String(err))
     } finally {
       setLoading(false)
     }
+  }
+
+  const saveRecentSearches = (newCity: string) => {
+    const previousSave = localStorage.getItem('cities-storage')
+    const newList: string[] = previousSave ? JSON.parse(previousSave) : []
+    const duplicatedFilter = newList.filter((city) => city.toLowerCase() !== newCity.toLowerCase())
+    const doneList = [newCity, ...duplicatedFilter].slice(0, 3)
+    localStorage.setItem('cities-storage', JSON.stringify(doneList))
   }
 
   const handleClear = () => {
@@ -85,7 +94,7 @@ function App() {
                     humidity={humidity}
                     windspeed={windSpeed}
           /> :
-          !loading ? <CleanView /> : <LoadingInfos />
+          !loading ? <CleanView onSearch={handleFetch} /> : <LoadingInfos />
         }
       </main>
       

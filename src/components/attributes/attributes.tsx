@@ -11,6 +11,7 @@ export function Attributes() {
             <li><a href="https://www.flaticon.com/free-icons/close" title="close icons">Close icons created by ariefstudio - Flaticon</a></li>
             <li><a href="https://www.flaticon.com/free-icons/gps-phone" title="gps phone icons">Gps phone icons created by Debi Alpa Nugraha - Flaticon</a></li>
             <li><a href="https://www.flaticon.com/free-icons/building" title="building icons">Building icons created by Magnific - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/history" title="history icons">History icons created by raanpooo - Flaticon</a></li>
           </ul>
         </footer>
     )
