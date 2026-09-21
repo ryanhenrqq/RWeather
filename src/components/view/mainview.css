@@ -60,6 +60,12 @@ main {
     margin-right: auto;
     object-fit: contain;
 }
+.clean-view h3{
+    font-size: 42px;
+}
+.clean-view p{
+    font-size: 26px;
+}
 .clean-view div, .clean-view-recent div{
     margin-right: auto;
     text-align: left;
