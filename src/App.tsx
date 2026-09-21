@@ -24,6 +24,7 @@ function App() {
 
   const handleFetch = async (city: string) => {
     setLoading(true)
+    setWeatherview(false)
     setErrStatus('')
     try { 
       const res = await fetch(`https://rweather-alpha.vercel.app/api/weather?city=${encodeURIComponent(city)}`)

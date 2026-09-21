@@ -1,10 +1,15 @@
 main {
   margin-top: 18vh;
+  animation: anim-lineUp 1s linear;
 }
 
 /* WEATHER VIEW */
 .weather-view{
-  width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    width: 100%;
 }
 .weather-view-temperature{
   font-size: 80px;
@@ -22,17 +27,59 @@ main {
 
 /* CLEAN VIEW */
 .clean-view{
-  margin-left: 33%;
-  margin-right: 33%;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    margin-left: 33%;
+    margin-right: 33%;
+    border: solid 1px black;
+    border-radius: 32px;
 }
 .clean-view img{
-  width: 70px;
-  height: 70px;
-  margin-right: 5%;
-  object-fit: contain;
+    width: 70px;
+    height: 70px;
+    margin-right: 5%;
+    object-fit: contain;
 }
 .clean-view div{
   max-width: 70%;
+}
+.loading-spinner{
+    width: 70px;
+    height: 70px;
+    border: 3px solid #ccc;
+    border-top-color: #000;
+    border-radius: 50%;
+    margin-right: 18px;
+    animation: spin 0.8s linear infinite;
+}
+
+/* ANIMAÇÕES */
+
+@keyframes anim-lineUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+  20% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(0%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(359deg);
+    }
 }
 
 @media (max-width: 768px) {

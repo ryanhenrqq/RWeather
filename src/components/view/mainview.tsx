@@ -1,13 +1,13 @@
 import './mainview.css'
 
 import type { WeatherViewInfos } from '../../types/types'
-import searchIcon from '../../assets/search.png'
+import officeIcon from '../../assets/office-building.png'
 
 export function CleanView() {
   return (
     <>
       <div className="flex-hor-align clean-view">
-        <img src={searchIcon} alt="Pesquisa" />
+        <img src={officeIcon} alt="Prédio" loading='lazy' />
         <div className="flex-ver">
           <h3>Comece pesquisando a sua cidade</h3>
           <p>Use o campo de pesquisa acima.</p>
@@ -21,7 +21,7 @@ export function LoadingInfos() {
   return(
     <>
       <div className="flex-hor-align clean-view">
-        <img src={searchIcon} alt="Pesquisa" />
+        <div className='loading-spinner'></div>
         <div className="flex-ver">
           <h3>Pesquisando</h3>
           <p>Aguarde um pouco.</p>
