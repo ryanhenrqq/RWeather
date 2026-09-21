@@ -24,7 +24,7 @@ export function CleanView({onSearch}: CleanViewNames) {
 
   return (
     <>
-        <div className="flex-ver">
+        <div className="flex-ver clean-view-top">
             <div className="flex-hor-align clean-view">
                 <img src={officeIcon} alt="Prédio" loading='lazy' />
                 <div className="flex-ver">
@@ -33,7 +33,7 @@ export function CleanView({onSearch}: CleanViewNames) {
                 </div>
             </div>
             <div className="flex-hor-align clean-view">
-                <img src={historyIcon} alt="Histórico" loading='lazy' />
+                <img src={historyIcon} style={{filter: 'invert(1)'}} alt="Histórico" loading='lazy' />
                 <div className="flex-ver">
                     <h3>Pesquisas recentes</h3>
                     {

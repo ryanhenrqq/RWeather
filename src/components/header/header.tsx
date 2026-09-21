@@ -115,10 +115,19 @@ export function Header({onSearch, onBack, error}: HeaderFunction) {
 }
 
 function InfosAbout() {
+    const [clearTxt, setClearTxt] = useState('Limpar pesquisas')
+    const handleSearchEraser = () => {
+        setClearTxt('Limpando, aguarde...')
+        localStorage.clear()
+        setTimeout(() => {
+            setClearTxt('Limpo com sucesso! Atualize a pagina')
+        })
+    }
     return(
         <div className="info-tab">
             <Attributes />
             <b>Criado por Ryan Henrique</b>
+            <button onClick={handleSearchEraser}>{clearTxt}</button>
         </div>
     )
 }
