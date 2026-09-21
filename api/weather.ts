@@ -6,8 +6,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { city, lat, lon } = req.query;
   const apiKey = process.env.WEATHER_API_KEY;
 
-  if (!city && !lat && !lon || typeof city !== 'string') {
-    return res.status(400).json({ error: 'Cidade inválida ou não informada' });
+  if (typeof city !== 'string') {
+    console.log(`WEATHER.TS: Variável da cidade não é uma string, ou está vazio.`)
+    if (!city && !lat && !lon) {
+      console.log(`WEATHER.TS: Não há nenhum valor nas variáveis de cidade, latitude e longitude, abortando consulta.`)
+      return res.status(400).json({ error: 'Entada inválida ou não informada' });
+    }
   }
 
   try {
@@ -23,6 +27,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     return res.status(200).json(data);
   } catch (error) {
-    return res.status(500).json({ error: 'Erro ao buscar dados do clima' });
+    return res.status(500).json({ error: 'Erro ao buscar dados.' });
   }
 }
