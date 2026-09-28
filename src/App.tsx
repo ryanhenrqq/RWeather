@@ -10,17 +10,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [weatherview, setWeatherview] = useState(false)
   const [errStatus, setErrStatus] = useState('')
-
-  const [temperature, setTemperature] = useState(0)
-  const [mintemp, setMintemp] = useState(0)
-  const [maxtemp, setMaxtemp] = useState(0)
-  const [feelslike, setFeelslike] = useState(0)
-  const [cityName, setCityName] = useState('')
-  const [countryName, setCountryName] = useState('')
-  const [cityTime, setCityTime] = useState('')
-  const [description, setDescription] = useState('')
-  const [windSpeed, setWindSpeed] = useState(0)
-  const [humidity, setHumidity] = useState(0)
+  const [weathData, setWeathData] = useState<WeatherData | null>(null)
 
   const handleFetch = async (city: string) => {
     setLoading(true)
@@ -29,31 +19,27 @@ function App() {
     try { 
       const res = await fetch(`https://rweather-alpha.vercel.app/api/weather?city=${encodeURIComponent(city)}`)
       if (!res.ok) {
-        const errData = await res.json()
-        throw new Error(errData.error || 'Cidade não encontrada.');
+        if (res.status === 429) {
+          throw new Error('Você fez muitas requisições!')
+        } else {
+          const errData = await res.json()
+          throw new Error(errData.error || 'Cidade não encontrada.');
+        }
+        
       }
       const data: WeatherData = await res.json()
-      if (data.cod === '404') {
-        throw new Error('Cidade não encontrada');
-      }
-      console.log("bem-sucedido", data)
-      setTemperature(Math.trunc(data.main.temp))
-      setMaxtemp(Math.trunc(data.main.temp_max))
-      setMintemp(Math.trunc(data.main.temp_min))
-      setFeelslike(Math.trunc(data.main.feels_like))
-      setCityName(data.name)
-      setCityTime(getCityTime(data.timezone))
-      setCountryName(data.sys.country)
-      setDescription(data.weather[0].description)
-      setHumidity(data.main.humidity)
-      setWindSpeed(Math.trunc(data.wind.speed))
-      setWeatherview(true)
-      saveRecentSearches(data.name)
+      if (data.cod === '404') { 
+        throw new Error('Cidade não encontrada') // a api as vezes faz a call ser bem sucedida mesmo que nao achar nada, dai isso aqui barra esse erro.
+      } 
+      console.log("bem-sucedido", data) //debug
+      setWeathData(data)
+      setWeatherview(true) // setado pra ir a tela das infos quando sair o loading
+      saveRecentSearches(data.name) // salva no localstorage
     } catch (err: any) {
-      console.error(err)
+      console.error(err) // fallback se nao funfar o de baixo
       setErrStatus(String(err))
     } finally {
-      setLoading(false)
+      setLoading(false) // vai pra tela de clima ou volta pro inicio dependendo se deu certo ou nao
     }
   }
 
@@ -68,32 +54,13 @@ function App() {
   const handleClear = () => {
     setLoading(false)
     setWeatherview(false)
-
-    setTemperature(0)
-    setMintemp(0)
-    setMaxtemp(0)
-    setFeelslike(0)
-    setCityName('')
-    setCityTime('')
-    setCountryName('')
-    setDescription('')
   }
   return (
     <>
       <Header onBack={handleClear} onSearch={handleFetch} error={errStatus} />
       <main>
         {weatherview ? 
-              <WeatherView cityname={cityName}
-                    timelocal={cityTime}
-                    temperature={temperature}
-                    mintemp={mintemp}
-                    maxtemp={maxtemp}
-                    feelslike={feelslike}
-                    country={countryName}
-                    description={description}
-                    humidity={humidity}
-                    windspeed={windSpeed}
-          /> :
+              <WeatherView cityname={weathData?.name ?? ''} timelocal={getCityTime(weathData?.timezone ?? 0)} temperature={Math.trunc(weathData?.main?.temp ?? 0)} mintemp={Math.trunc(weathData?.main?.temp_min ?? 0)} maxtemp={Math.trunc(weathData?.main?.temp_max ?? 0)} feelslike={Math.trunc(weathData?.main?.feels_like ?? 0)} country={weathData?.sys.country ?? ''} description={weathData?.weather[0].description ?? ''} humidity={weathData?.main.humidity ?? 0} windspeed={Math.trunc(weathData?.wind?.speed ?? 0)} /> :
           !loading ? <CleanView onSearch={handleFetch} /> : <LoadingInfos />
         }
       </main>
