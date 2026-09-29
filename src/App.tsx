@@ -19,9 +19,8 @@ function App() {
     try { 
       const res = await fetch(`https://rweather-alpha.vercel.app/api/weather?city=${encodeURIComponent(city)}`)
       if (!res.ok) {
-        console.log("caiu no 1") //debug pra ver onde cai 429
         if (res.status === 429) {
-          console.log("ruim1") //debug pra ver onde cai 429
+          setErrStatus('Muitas requisições!')
           throw new Error('Muitas requisições!')
         } else {
           const errData = await res.json()
@@ -31,13 +30,7 @@ function App() {
       }
       const data: WeatherData = await res.json()
       if (data.cod === '404') { 
-        console.log("caiu no 2") //debug pra ver onde cai 429
-        if (res.status === 429) {
-          console.log("ruim2", data) //debug pra ver onde cai 429
-          throw new Error('Muitas requisições!')
-        } else {
-          throw new Error('Cidade não encontrada') // a api as vezes faz a call ser bem sucedida mesmo que nao achar nada, dai isso aqui barra esse erro.
-        }
+        throw new Error('Cidade não encontrada') // a api as vezes faz a call ser bem sucedida mesmo que nao achar nada, dai isso aqui barra esse erro.
       } 
       console.log("bem-sucedido", data) //debug
       setWeathData(data)
@@ -45,7 +38,7 @@ function App() {
       saveRecentSearches(data.name) // salva no localstorage
     } catch (err: any) {
       console.error(err) // fallback se nao funfar o de baixo
-      setErrStatus(String(err))
+      errStatus==''?setErrStatus(String(err)):console.log('Variável de erro já estava ocupada, pulando.')
     } finally {
       setLoading(false) // vai pra tela de clima ou volta pro inicio dependendo se deu certo ou nao
     }
