@@ -101,7 +101,17 @@ export function Header({onSearch, onBack, error}: HeaderFunction) {
             />
             <img src={searchIcon} alt="Pesquisar" onClick={() => handleSearch(city)} />
           </div>
-          {error==''?<span></span>:<small style={{color:'red'}}>Cidade nao encontrada</small>}
+          {error==''?<span></span>:<small style={{
+            color:'red',
+            width: '70%', 
+            whiteSpace:'nowrap', 
+            overflow:'hidden',
+            textOverflow:'ellipsis',
+            height:'11px',
+            fontSize:'11px',
+            textAlign:'center'
+            }}>{error}</small>
+            }
         </div>
         <div className="right-side-header flex-hor-align">
             <img src={gpsIcon} alt="Localização" onClick={() => handleGeolocationSearch(lastLat, lastLon)} />

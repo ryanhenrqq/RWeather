@@ -19,17 +19,21 @@ function App() {
     try { 
       const res = await fetch(`https://rweather-alpha.vercel.app/api/weather?city=${encodeURIComponent(city)}`)
       if (!res.ok) {
+        console.log("caiu no 1") //debug pra ver onde cai 429
         if (res.status === 429) {
+          console.log("ruim1") //debug pra ver onde cai 429
           throw new Error('Muitas requisições!')
         } else {
           const errData = await res.json()
-          throw new Error(errData.error || 'Cidade não encontrada.');
+          throw new Error(errData.error || 'Erro incomum, verifique o console.');
         }
         
       }
       const data: WeatherData = await res.json()
       if (data.cod === '404') { 
+        console.log("caiu no 2") //debug pra ver onde cai 429
         if (res.status === 429) {
+          console.log("ruim2", data) //debug pra ver onde cai 429
           throw new Error('Muitas requisições!')
         } else {
           throw new Error('Cidade não encontrada') // a api as vezes faz a call ser bem sucedida mesmo que nao achar nada, dai isso aqui barra esse erro.
