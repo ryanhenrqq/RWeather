@@ -1,5 +1,8 @@
 import './mainview.css'
 
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+
 import type { WeatherViewInfos, CleanViewNames } from '../../types/types'
 import officeIcon from '../../assets/office-building.png'
 import historyIcon from '../../assets/history.png'
@@ -129,7 +132,15 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
 
         <div className="flex-hor-align weather-view-top">
           <div className="flex-ver weather-view-left">
-            
+                {/* PRIMEIRO TESTE DE IMPLEMENTAÇÃO DE MAPAS */}
+              <MapContainer center={[lat, lon]} zoom={10} style={{ height: '15rem', width: '15rem' }} >
+                  <TileLayer attribution='&copy; OpenStreetMap contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                  <Marker position={[lat, lon]}>
+                      <Popup>
+                          {cityname}
+                      </Popup>
+                  </Marker>
+              </MapContainer>
           </div>
 
           <div className="flex-ver city-infos-view" style={{width: '100%'}}>

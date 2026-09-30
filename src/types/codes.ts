@@ -19,4 +19,17 @@ export const countryNames: Record<string, string> = {
     CN: 'China',
     AU: 'Austrália',
     IE: 'Irlanda',
+    RU:'Rússia',
+    BE:'Bielorússia',
+    VE:'Venezuela',
+    MO:'Mônaco',
+    SE:'Sweden',
+    CH:'Switzerland',
+    TH:'Thailândia',
+    UA:'Ucrânia',
+    VA:'Vaticano',
+    KR:'Coréia do Sul',
+    QA:'Catar',
+    PO:'Poland',
+    HT:'Haiti'
 }
