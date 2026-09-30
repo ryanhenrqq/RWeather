@@ -16,10 +16,19 @@ export function Header({onSearch, onBack, onLoading, onLoadingFail, error}: Head
   const [infosView, setInfosView] = useState(false)
   const [lastLat, setLastLat] = useState(0)
   const [lastLon, setLastLon] = useState(0)
+  const [showLocSearch, setShowLocSearch] = useState(false)
 
   useEffect(() => {
     setCity(city.replace(/[^a-zA-ZÀ-ÿ ]/g, ""))
   },[city])
+
+  useEffect(() => {
+    if(lastLat!=0&&lastLon!=0){
+        setShowLocSearch(true)
+    } else {
+        setShowLocSearch(false)
+    }
+  }, [lastLat, lastLon])
 
   const handleSearch = (city: string) => {
     console.log("click - header")
@@ -34,6 +43,7 @@ export function Header({onSearch, onBack, onLoading, onLoadingFail, error}: Head
   const handleGeolocationSearch = async(lat: number, lon: number) => {
     onLoading()
     let cityname = ''
+    if (lat==0&&lon==0) return
     try {
         const res = await fetch(`https://rweather-alpha.vercel.app/api/weather?lat=${lat}&lon=${lon}`)
         if (!res.ok){
@@ -57,6 +67,7 @@ export function Header({onSearch, onBack, onLoading, onLoadingFail, error}: Head
             navigator.geolocation.getCurrentPosition((pos) => {
                 const lat = Number(pos.coords.latitude)
                 const lon = Number(pos.coords.longitude)
+                if (lat==0||lon==0) return
                 setLastLat(lat)
                 setLastLon(lon)
                 handleGeolocationSearch(lat, lon)
@@ -106,9 +117,9 @@ export function Header({onSearch, onBack, onLoading, onLoadingFail, error}: Head
             }
         </div>
         <div className="right-side-header flex-hor-align">
-            <img src={gpsIcon} alt="Localização" onClick={() => handleGeolocationSearch(lastLat, lastLon)} />
-          <img src={homeIcon} alt="Voltar" onClick={onBack} />
-          <img src={!infosView?infoIcon:closeIcon} alt="Info" onClick={handleInfosView} />
+            {showLocSearch? <img src={gpsIcon} alt="Localização" onClick={() => handleGeolocationSearch(lastLat, lastLon)} />:null}
+            <img src={homeIcon} alt="Voltar" onClick={onBack} />
+            <img src={!infosView?infoIcon:closeIcon} alt="Info" onClick={handleInfosView} />
         </div>
       </header>
       {infosView?<InfosAbout />:null}
