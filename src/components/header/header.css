@@ -110,4 +110,7 @@ header div{
         height: 13px;
         padding: 4px;
     }
+    .info-tab{
+      height: 17rem;
+    }
 }
