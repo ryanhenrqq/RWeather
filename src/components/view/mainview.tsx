@@ -146,7 +146,7 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
           <div className="flex-ver city-infos-view" style={{width: '100%'}}>
             <h3 className='weather-view-cityname' style={{textAlign: 'left', width: '100%'}}>Informações de {cityname}</h3>
             <div className="flex hor-align" style={{width: '100%'}}>
-                <b style={{textAlign: 'left', width: '100%'}}>País: {countryNames[country.toUpperCase()].name || country}</b>
+                <b style={{textAlign: 'left', width: '100%'}}>País: {countryNames[country.toUpperCase()]?countryNames[country.toUpperCase()].name || country:country.toUpperCase()}</b>
             </div>
             <div className="flex hor-align" style={{width: '100%'}}>
                 <b style={{textAlign: 'left', width: '100%'}}>Horário Local: {timelocal} (UTC&nbsp;{timezone/3600})</b>
