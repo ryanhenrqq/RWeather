@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
@@ -7,6 +7,26 @@
     <title>RWeather</title>
   </head>
   <body>
+    <div id="loading-screen">
+      <p>Inicializando script...</p>
+      <p class="loading-warning">
+        Se esta tela permanecer por muito tempo,
+        tente recarregar a página.
+      </p>
+    </div>
+    <noscript>
+      <style>
+        #loading-screen {
+          display: none;
+        }
+      </style>
+      <div class="noscript-screen">
+        <h1>JavaScript necessário</h1>
+        <p>
+          Este site depende de JavaScript para funcionar corretamente.
+        </p>
+      </div>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

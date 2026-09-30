@@ -6,6 +6,11 @@ import { CleanView, WeatherView, LoadingInfos } from './components/view/mainview
 
 import { useState } from 'react'
 
+const loadingScreen = document.getElementById("loading-screen")
+if (loadingScreen) {
+  loadingScreen.remove()
+}
+
 function App() {
   const [loading, setLoading] = useState(false)
   const [weatherview, setWeatherview] = useState(false)
