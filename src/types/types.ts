@@ -57,7 +57,8 @@ export interface WeatherViewInfos{
     visibility: number,
     sunrise:string,
     sunset:string,
-    clouds: number
+    clouds: number,
+    timezone: number
 }
 
 export interface CleanViewNames{

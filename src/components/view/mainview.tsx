@@ -72,7 +72,7 @@ export function LoadingInfos() {
   )
 }
 
-export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description, humidity, windspeed,winddir, lat, lon, visibility, sunrise, sunset, clouds}: WeatherViewInfos) {
+export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description, humidity, windspeed,winddir, lat, lon, visibility, sunrise, sunset, clouds, timezone}: WeatherViewInfos) {
   return(
     <>
       <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" />
@@ -102,7 +102,7 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
             <h3 className='weather-view-cityname' style={{textAlign: 'left', width: '100%'}}>{description}</h3>
             <div className="flex-hor-align" style={{width: '100%'}}>
               <b style={{textAlign: 'left', width: '100%'}}><b>{timelocal}</b> - {cityname} -&nbsp;
-              {countryNames[country.toUpperCase()] || country}
+              {country}
               </b>
             </div>
             <div className="flex hor-align" style={{width: '100%'}}>
@@ -146,10 +146,10 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
           <div className="flex-ver city-infos-view" style={{width: '100%'}}>
             <h3 className='weather-view-cityname' style={{textAlign: 'left', width: '100%'}}>Informações de {cityname}</h3>
             <div className="flex hor-align" style={{width: '100%'}}>
-                <b style={{textAlign: 'left', width: '100%'}}>País: {countryNames[country.toUpperCase()] || country}</b>
+                <b style={{textAlign: 'left', width: '100%'}}>País: {countryNames[country.toUpperCase()].name || country}</b>
             </div>
             <div className="flex hor-align" style={{width: '100%'}}>
-                <b style={{textAlign: 'left', width: '100%'}}>Horário Local: {timelocal}</b>
+                <b style={{textAlign: 'left', width: '100%'}}>Horário Local: {timelocal} (UTC&nbsp;{timezone/3600})</b>
             </div>
             <div className="flex hor-align" style={{width: '100%'}}>
                 <b style={{textAlign: 'left', width: '100%'}}>Latitude: {lat} - Longitude: {lon}</b>
@@ -159,6 +159,13 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
             </div>
             <div className="flex hor-align" style={{width: '100%'}}>
                 <b style={{textAlign: 'left', width: '100%'}}>Anoitecer: {sunset}</b>
+            </div>
+            <div className="flex hor-align" style={{width: '100%'}}>
+                {
+                  countryNames[country.toUpperCase()]?
+                    <b style={{textAlign: 'left', width: '100%'}}>Código de Telefone: +{countryNames[country.toUpperCase()].phoneCode}</b>:
+                    null
+                  }
             </div>
           </div>
         </div>
