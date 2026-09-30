@@ -180,6 +180,7 @@ main {
     }
     .clean-view-top{
         flex-direction: column;
+        top: 50%;
     }
     .clean-view {
         width: 80%;
