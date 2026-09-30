@@ -7,6 +7,7 @@ import type { WeatherViewInfos, CleanViewNames } from '../../types/types'
 import officeIcon from '../../assets/office-building.png'
 import historyIcon from '../../assets/history.png'
 import sunsetSky from '../../assets/sunset-sky.jpg'
+import logo from '../../favicon.png'
 import { useEffect, useState } from 'react'
 import { countryNames } from '../../types/codes'
 
@@ -78,6 +79,23 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
       <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" />
       <div className="flex-ver weather-view">
 
+        <div className="weather-view-top flex-hor align">
+          <img src={logo} alt="Sol - Logo"
+            style={{
+              width:'30px',
+              height:'30px',
+              objectFit:'cover',
+              marginRight:'10px',
+              filter:'invert(1)'
+            }}
+          />
+          <b
+            style={{
+              fontSize:'28px'
+            }}
+          >Agora em {cityname.toLowerCase()}</b>
+        </div>
+
         <div className="flex-hor-align weather-view-top">
           <div className="flex-ver weather-view-left">
             <div className='flex-hor-align'>
@@ -113,17 +131,17 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
                 <b style={{textAlign: 'left', width: '100%'}}>Força do vento: {windspeed} km/h&nbsp;{windspeed>20?<span>(Forte)</span>:<span>(Leve)</span>} ({winddir}°)</b>
             </div> 
             <div className="flex-hor-align" style={{width: '100%'}}>
-                <b style={{textAlign: 'left', width: '100%'}}>Visibilidade: {visibility/1000} Km&nbsp;-&nbsp;Nuvens: {clouds}%</b>
+                <b style={{textAlign: 'left', width: '100%'}}>Visibilidade: {Math.trunc(visibility/1000)} Km&nbsp;-&nbsp;Nuvens: {clouds}%</b>
             </div> 
             <div className="flex-hor-align" style={{width: '100%'}}>
                 {Number(temperature)<5?
-                <b>Temperatura negativa, com frio intenso.</b>
+                <b style={{textAlign: 'left', width: '100%'}}>Temperatura negativa, com frio intenso.</b>
                 :
-                Number(temperature)<17&&Number(temperature)>=5?<b>Temperatura muito baixa, exige agasalhos.</b>:
-                Number(temperature)<25&&Number(temperature)>=17?<b>Temperatura agradável, sem frio ou calor excessivo.</b>:
-                Number(temperature)<31&&Number(temperature)>=25?<b>Temperatura elevada, com sensação de calor.</b>:
-                Number(temperature)<36&&Number(temperature)>=31?<b>Calor intenso e desconfortável.</b>:
-                Number(temperature)>=36?<b>Calor excepcional, com temperaturas muito elevadas.</b>:
+                Number(temperature)<17&&Number(temperature)>=5?<b style={{textAlign: 'left', width: '100%'}}>Temperatura muito baixa, exige agasalhos.</b>:
+                Number(temperature)<25&&Number(temperature)>=17?<b style={{textAlign: 'left', width: '100%'}}>Temperatura agradável, sem frio ou calor excessivo.</b>:
+                Number(temperature)<31&&Number(temperature)>=25?<b style={{textAlign: 'left', width: '100%'}}>Temperatura elevada, com sensação de calor.</b>:
+                Number(temperature)<36&&Number(temperature)>=31?<b style={{textAlign: 'left', width: '100%'}}>Calor intenso e desconfortável.</b>:
+                Number(temperature)>=36?<b style={{textAlign: 'left', width: '100%'}}>Calor excepcional, com temperaturas muito elevadas.</b>:
                 null
                 }
             </div> 
