@@ -73,6 +73,7 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
     <>
       <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" />
       <div className="flex-ver weather-view">
+
         <div className="flex-hor-align weather-view-top">
           <div className="flex-ver weather-view-left">
             <div className='flex-hor-align'>
@@ -87,8 +88,9 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
               </div>
             </div>
             
-            <div style={{width: '100%'}}>
+            <div style={{width: '100%'}} className='flex-ver'>
               <b style={{textAlign: 'left', width: '100%'}}>Sensação de {feelslike}°</b>
+              <b style={{textAlign: 'left', width: '100%'}}>Temperatura em {Math.trunc(Number(temperature)*9/5+32)}°F</b>
             </div>
           </div>
 
@@ -103,12 +105,23 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
             </div>
             <div className="flex-hor-align" style={{width: '100%'}}>
                 <b style={{textAlign: 'left', width: '100%'}}>Força do vento: {windspeed} km/h&nbsp;{windspeed>20?<span>(Forte)</span>:<span>(Leve)</span>}</b>
-                
-            </div>
+            </div> 
+            <div className="flex-hor-align" style={{width: '100%'}}>
+                {Number(temperature)<5?
+                <b>Temperatura negativa, com frio intenso.</b>
+                :
+                Number(temperature)<17&&Number(temperature)>=5?<b>Temperatura muito baixa, exige agasalhos.</b>:
+                Number(temperature)<25&&Number(temperature)>=17?<b>Temperatura agradável, sem frio ou calor excessivo.</b>:
+                Number(temperature)<31&&Number(temperature)>=25?<b>Temperatura elevada, com sensação de calor.</b>:
+                Number(temperature)<36&&Number(temperature)>=31?<b>Calor intenso e desconfortável.</b>:
+                Number(temperature)>=36?<b>Calor excepcional, com temperaturas muito elevadas.</b>:
+                null
+                }
+            </div> 
           </div>
-
         </div>
 
+        
       </div>
     </>
   )
