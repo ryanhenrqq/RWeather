@@ -205,6 +205,10 @@ main {
     .clean-view-recent {
         width: 80%;
         height: 11rem;
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-top: 12px;
+        padding-bottom: 12px;
     }
     .weather-view-top{
         flex-direction: column;
@@ -217,5 +221,8 @@ main {
     }
     .weather-view-cityname{
         font-size: 26px;
+    }
+    .city-infos-view div b{
+        font-size: 14px;
     }
 }
