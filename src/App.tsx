@@ -61,7 +61,7 @@ function App() {
       <Header onBack={handleClear} onSearch={handleFetch} onLoading={()=>setLoading(true)} onLoadingFail={()=>setLoading(false)} error={errStatus} />
       <main>
         {weatherview ? 
-              <WeatherView cityname={weathData?.name ?? ''} timelocal={getCityTime(weathData?.timezone ?? 0)} temperature={Math.trunc(weathData?.main?.temp ?? 0)} mintemp={Math.trunc(weathData?.main?.temp_min ?? 0)} maxtemp={Math.trunc(weathData?.main?.temp_max ?? 0)} feelslike={Math.trunc(weathData?.main?.feels_like ?? 0)} country={weathData?.sys.country ?? ''} description={weathData?.weather[0].description ?? ''} humidity={weathData?.main.humidity ?? 0} windspeed={Math.trunc(weathData?.wind?.speed ?? 0)} /> :
+              <WeatherView cityname={weathData?.name ?? ''} timelocal={getCityTime(weathData?.timezone ?? 0)} temperature={Math.trunc(weathData?.main?.temp ?? 0)} mintemp={Math.trunc(weathData?.main?.temp_min ?? 0)} maxtemp={Math.trunc(weathData?.main?.temp_max ?? 0)} feelslike={Math.trunc(weathData?.main?.feels_like ?? 0)} country={weathData?.sys.country ?? ''} description={weathData?.weather[0].description ?? ''} humidity={weathData?.main.humidity ?? 0} windspeed={Math.trunc(weathData?.wind?.speed ?? 0)} winddir={weathData?.wind?.deg ?? 0} lat={weathData?.coord.lat ?? 0} lon={weathData?.coord.lon ?? 0} visibility={weathData?.visibility ?? 0} sunrise={ConvertIsoDate(weathData?.sys.sunrise??0, weathData?.timezone??0)} sunset={ConvertIsoDate(weathData?.sys.sunset??0,  weathData?.timezone??0)} clouds={weathData?.clouds.all??0} /> :
           !loading ? <CleanView onSearch={handleFetch} /> : <LoadingInfos />
         }
       </main>
@@ -79,6 +79,19 @@ export function getCityTime(timezoneOffsetInSeconds: number): string {
     hour: '2-digit',
     minute: '2-digit',
   });
+}
+
+function ConvertIsoDate(date:number, timezone: number):string{
+  const now = new Date();
+  const reqDt = new Date(date*1000)
+  const localOffsetInMs = now.getTimezoneOffset() * 60 * 1000;
+  const utcTimeInMs = reqDt.getTime() + localOffsetInMs
+  const cityTimeInMs = utcTimeInMs + (timezone * 1000);
+  const dt = new Date(cityTimeInMs).toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+  return dt
 }
 
 export default App

@@ -2,6 +2,14 @@ export interface WeatherData{
     name: string,
     timezone: number,
     cod: string,
+    visibility: number,
+    clouds: {
+        all: number
+    },
+    coord: {
+        lat: number,
+        lon:number
+    },
     main: {
         temp: number,
         feels_like: number,
@@ -14,10 +22,13 @@ export interface WeatherData{
         icon: string,
     }>
     sys: {
-        country: string
+        country: string,
+        sunrise: number,
+        sunset: number
     }
     wind: {
         speed: number,
+        deg: number
     };
 }
 
@@ -39,7 +50,14 @@ export interface WeatherViewInfos{
     feelslike: number,
     country: string,
     humidity: number,
-    windspeed: number
+    windspeed: number,
+    winddir:number,
+    lat: number,
+    lon: number,
+    visibility: number,
+    sunrise:string,
+    sunset:string,
+    clouds: number
 }
 
 export interface CleanViewNames{

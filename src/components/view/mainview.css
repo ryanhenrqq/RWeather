@@ -11,6 +11,7 @@ main {
     justify-content: center;
     width: 100%;
     height: 100%;
+    gap: 20px;
     color: #fff;
     z-index: 1;
 }
@@ -20,6 +21,8 @@ main {
     gap: 24px;
     padding: 32px;
     border-radius: 32px;
+    margin-left: 20px;
+    margin-right: 20px;
     z-index: 1;
 }
 .weather-view-left{
@@ -177,8 +180,9 @@ main {
 }
 
 @media (max-width: 768px) {
-    main {
-        margin-top: 5vh;
+    .main {
+        padding-top: 11vh;
+        padding-bottom: 1vh;
     }
     .clean-view-top{
         flex-direction: column;

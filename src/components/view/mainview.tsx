@@ -5,6 +5,7 @@ import officeIcon from '../../assets/office-building.png'
 import historyIcon from '../../assets/history.png'
 import sunsetSky from '../../assets/sunset-sky.jpg'
 import { useEffect, useState } from 'react'
+import { countryNames } from '../../types/codes'
 
 export function CleanView({onSearch}: CleanViewNames) {
     const [recentSearch, setRecentSearch] = useState<string[]>([])
@@ -68,7 +69,7 @@ export function LoadingInfos() {
   )
 }
 
-export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description, humidity, windspeed}: WeatherViewInfos) {
+export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description, humidity, windspeed,winddir, lat, lon, visibility, sunrise, sunset, clouds}: WeatherViewInfos) {
   return(
     <>
       <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" />
@@ -97,14 +98,19 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
           <div className="flex-ver city-infos-view" style={{width: '100%'}}>
             <h3 className='weather-view-cityname' style={{textAlign: 'left', width: '100%'}}>{description}</h3>
             <div className="flex-hor-align" style={{width: '100%'}}>
-              <b style={{textAlign: 'left', width: '100%'}}><b>{timelocal}</b> - {cityname} - {country}</b>
+              <b style={{textAlign: 'left', width: '100%'}}><b>{timelocal}</b> - {cityname} -&nbsp;
+              {countryNames[country.toUpperCase()] || country}
+              </b>
             </div>
             <div className="flex hor-align" style={{width: '100%'}}>
                 <b style={{textAlign: 'left', width: '100%'}}>Humidade: {humidity}%&nbsp;-&nbsp;
                 {humidity>45?<span>Alto</span>:<span>Baixo</span>}</b>
             </div>
             <div className="flex-hor-align" style={{width: '100%'}}>
-                <b style={{textAlign: 'left', width: '100%'}}>Força do vento: {windspeed} km/h&nbsp;{windspeed>20?<span>(Forte)</span>:<span>(Leve)</span>}</b>
+                <b style={{textAlign: 'left', width: '100%'}}>Força do vento: {windspeed} km/h&nbsp;{windspeed>20?<span>(Forte)</span>:<span>(Leve)</span>} ({winddir}°)</b>
+            </div> 
+            <div className="flex-hor-align" style={{width: '100%'}}>
+                <b style={{textAlign: 'left', width: '100%'}}>Visibilidade: {visibility/1000} Km&nbsp;-&nbsp;Nuvens: {clouds}%</b>
             </div> 
             <div className="flex-hor-align" style={{width: '100%'}}>
                 {Number(temperature)<5?
@@ -121,7 +127,30 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
           </div>
         </div>
 
-        
+        <div className="flex-hor-align weather-view-top">
+          <div className="flex-ver weather-view-left">
+            
+          </div>
+
+          <div className="flex-ver city-infos-view" style={{width: '100%'}}>
+            <h3 className='weather-view-cityname' style={{textAlign: 'left', width: '100%'}}>Informações de {cityname}</h3>
+            <div className="flex hor-align" style={{width: '100%'}}>
+                <b style={{textAlign: 'left', width: '100%'}}>País: {countryNames[country.toUpperCase()] || country}</b>
+            </div>
+            <div className="flex hor-align" style={{width: '100%'}}>
+                <b style={{textAlign: 'left', width: '100%'}}>Horário Local: {timelocal}</b>
+            </div>
+            <div className="flex hor-align" style={{width: '100%'}}>
+                <b style={{textAlign: 'left', width: '100%'}}>Latitude: {lat} - Longitude: {lon}</b>
+            </div>
+            <div className="flex hor-align" style={{width: '100%'}}>
+                <b style={{textAlign: 'left', width: '100%'}}>Amanhecer: {sunrise}</b>
+            </div>
+            <div className="flex hor-align" style={{width: '100%'}}>
+                <b style={{textAlign: 'left', width: '100%'}}>Anoitecer: {sunset}</b>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )
