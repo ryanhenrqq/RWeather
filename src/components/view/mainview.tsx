@@ -3,6 +3,7 @@ import './mainview.css'
 import type { WeatherViewInfos, CleanViewNames } from '../../types/types'
 import officeIcon from '../../assets/office-building.png'
 import historyIcon from '../../assets/history.png'
+import sunsetSky from '../../assets/sunset-sky.jpg'
 import { useEffect, useState } from 'react'
 
 export function CleanView({onSearch}: CleanViewNames) {
@@ -24,6 +25,7 @@ export function CleanView({onSearch}: CleanViewNames) {
 
   return (
     <>
+        <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" style={{filter:'brightness(0.7)'}} />
         <div className="clean-view-top">
             <div className="flex-hor-align clean-view">
                 <img src={officeIcon} alt="Prédio" loading='lazy' />
@@ -54,9 +56,10 @@ export function CleanView({onSearch}: CleanViewNames) {
 export function LoadingInfos() {
   return(
     <>
+      <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" style={{filter:'brightness(0.5)'}} />
       <div className="flex-hor-align clean-view-top">
         <div className='loading-spinner'></div>
-        <div className="flex-ver">
+        <div className="flex-ver" style={{color:'#fff'}}>
           <h3>Pesquisando</h3>
           <p>Aguarde um pouco.</p>
         </div>
@@ -68,6 +71,7 @@ export function LoadingInfos() {
 export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description, humidity, windspeed}: WeatherViewInfos) {
   return(
     <>
+      <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" />
       <div className="flex-ver weather-view">
         <div className="flex-hor-align weather-view-top">
           <div className="flex-ver weather-view-left">

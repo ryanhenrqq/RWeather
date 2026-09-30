@@ -127,9 +127,11 @@ function InfosAbout() {
     }
     return(
         <div className="info-tab">
-            <Attributes />
-            <b>Criado por Ryan Henrique</b>
-            <button onClick={handleSearchEraser}>{clearTxt}</button>
+            <div>
+                <Attributes />
+                <b>Criado por Ryan Henrique</b>
+                <button onClick={handleSearchEraser}>{clearTxt}</button>
+            </div>
         </div>
     )
 }
