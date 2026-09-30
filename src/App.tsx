@@ -58,7 +58,7 @@ function App() {
   }
   return (
     <>
-      <Header onBack={handleClear} onSearch={handleFetch} error={errStatus} />
+      <Header onBack={handleClear} onSearch={handleFetch} onLoading={()=>setLoading(true)} onLoadingFail={()=>setLoading(false)} error={errStatus} />
       <main>
         {weatherview ? 
               <WeatherView cityname={weathData?.name ?? ''} timelocal={getCityTime(weathData?.timezone ?? 0)} temperature={Math.trunc(weathData?.main?.temp ?? 0)} mintemp={Math.trunc(weathData?.main?.temp_min ?? 0)} maxtemp={Math.trunc(weathData?.main?.temp_max ?? 0)} feelslike={Math.trunc(weathData?.main?.feels_like ?? 0)} country={weathData?.sys.country ?? ''} description={weathData?.weather[0].description ?? ''} humidity={weathData?.main.humidity ?? 0} windspeed={Math.trunc(weathData?.wind?.speed ?? 0)} /> :

@@ -24,6 +24,8 @@ export interface WeatherData{
 export interface HeaderFunction{
     onSearch: (city: string) => void,
     onBack: () => void,
+    onLoading: () => void,
+    onLoadingFail: () => void,
     error: string
 }
 
