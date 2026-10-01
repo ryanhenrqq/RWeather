@@ -51,8 +51,9 @@ export function Header({onSearch, onBack, onLoading, onLoadingFail, error}: Head
             throw new Error(errData.error || 'essas coords não foram encontradas')
         }
         const data = await res.json()
-        cityname = String(data.name)
-        setCity(String(data.name))
+        console.log(data)
+        cityname = String(data[0].name)
+        setCity(String(data[0].name))
     } catch (err: any) {
         onLoadingFail()
         console.error(err)

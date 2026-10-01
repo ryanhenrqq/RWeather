@@ -1,8 +1,8 @@
 interface CountryInfo{
     name:string,
     phoneCode:number,
-}
-
+} // feature: adicionar um de moeda e de iso de moeda
+//   lista salva no firefox
 export const countryNames: Record<string, CountryInfo> = {
     BR: {
         name:'Brasil',
