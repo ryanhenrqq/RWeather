@@ -1,3 +1,19 @@
+export interface GeoSearchData{
+    continent:string,
+    principalSubdivision:string,
+    countryName:string,
+    localityInfo:{
+        administrative: InformAdminInfos[],
+        informative: InformAdminInfos[]
+    }
+}
+
+interface InformAdminInfos{
+    name?: string,
+    description?: string,
+    adminLevel?:number
+}
+
 export interface WeatherData{
     name: string,
     timezone: number,
@@ -58,7 +74,8 @@ export interface WeatherViewInfos{
     sunrise:string,
     sunset:string,
     clouds: number,
-    timezone: number
+    timezone: number,
+    geodata: GeoSearchData|null,
 }
 
 export interface CleanViewNames{

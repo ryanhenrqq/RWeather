@@ -1,6 +1,6 @@
 import './App.css'
 
-import type { WeatherData } from './types/types'
+import type { WeatherData, GeoSearchData } from './types/types'
 import { Header } from './components/header/header'
 import { CleanView, WeatherView, LoadingInfos } from './components/view/mainview'
 
@@ -16,6 +16,7 @@ function App() {
   const [weatherview, setWeatherview] = useState(false)
   const [errStatus, setErrStatus] = useState('')
   const [weathData, setWeathData] = useState<WeatherData | null>(null)
+  const [geoData, setGeoData] = useState<GeoSearchData | null>(null)
 
   const handleFetch = async (city: string) => {
     setLoading(true)
@@ -31,13 +32,23 @@ function App() {
           const errData = await res.json()
           throw new Error(errData.error || 'Erro incomum, verifique o console.');
         }
-        
       }
       const data: WeatherData = await res.json()
       if (data.cod === '404') { 
         throw new Error('Cidade não encontrada') // a api as vezes faz a call ser bem sucedida mesmo que nao achar nada, dai isso aqui barra esse erro.
       } 
       console.log("bem-sucedido", data) //debug
+
+      // geocoding api temp debug
+      const resp_geo = await fetch(`https://rweather-alpha.vercel.app/api/geocoding?lat=${data.coord.lat}&lon=${data.coord.lon}`)
+      const dt = await resp_geo.json()
+      console.log(dt) // deu certo! 
+      setGeoData(dt)
+      // dt.continent = continente (pt)
+      // dt.pricipalSubdivision = estado
+      // dt.localityInfo = localityInfo.administrative[numero da lista], localityInfo.informative[numero da lista]
+      //
+
       setWeathData(data)
       setWeatherview(true) // setado pra ir a tela das infos quando sair o loading
       saveRecentSearches(data.name) // salva no localstorage
@@ -66,7 +77,7 @@ function App() {
       <Header onBack={handleClear} onSearch={handleFetch} onLoading={()=>setLoading(true)} onLoadingFail={()=>setLoading(false)} error={errStatus} />
       <main>
         {weatherview ? 
-              <WeatherView cityname={weathData?.name ?? ''} timelocal={getCityTime(weathData?.timezone ?? 0)} temperature={Math.trunc(weathData?.main?.temp ?? 0)} mintemp={Math.trunc(weathData?.main?.temp_min ?? 0)} maxtemp={Math.trunc(weathData?.main?.temp_max ?? 0)} feelslike={Math.trunc(weathData?.main?.feels_like ?? 0)} country={weathData?.sys.country ?? ''} description={weathData?.weather[0].description ?? ''} humidity={weathData?.main.humidity ?? 0} windspeed={Math.trunc(weathData?.wind?.speed ?? 0)} winddir={weathData?.wind?.deg ?? 0} lat={weathData?.coord.lat ?? 0} lon={weathData?.coord.lon ?? 0} visibility={weathData?.visibility ?? 0} sunrise={ConvertIsoDate(weathData?.sys.sunrise??0, weathData?.timezone??0)} sunset={ConvertIsoDate(weathData?.sys.sunset??0,  weathData?.timezone??0)} clouds={weathData?.clouds.all??0} timezone={weathData?.timezone??0} /> :
+              <WeatherView cityname={weathData?.name ?? ''} timelocal={getCityTime(weathData?.timezone ?? 0)} temperature={Math.trunc(weathData?.main?.temp ?? 0)} mintemp={Math.trunc(weathData?.main?.temp_min ?? 0)} maxtemp={Math.trunc(weathData?.main?.temp_max ?? 0)} feelslike={Math.trunc(weathData?.main?.feels_like ?? 0)} country={weathData?.sys.country ?? ''} description={weathData?.weather[0].description ?? ''} humidity={weathData?.main.humidity ?? 0} windspeed={Math.trunc(weathData?.wind?.speed ?? 0)} winddir={weathData?.wind?.deg ?? 0} lat={weathData?.coord.lat ?? 0} lon={weathData?.coord.lon ?? 0} visibility={weathData?.visibility ?? 0} sunrise={ConvertIsoDate(weathData?.sys.sunrise??0, weathData?.timezone??0)} sunset={ConvertIsoDate(weathData?.sys.sunset??0,  weathData?.timezone??0)} clouds={weathData?.clouds.all??0} timezone={weathData?.timezone??0} geodata={geoData} /> :
           !loading ? <CleanView onSearch={handleFetch} /> : <LoadingInfos />
         }
       </main>

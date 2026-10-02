@@ -73,7 +73,7 @@ export function LoadingInfos() {
   )
 }
 
-export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description, humidity, windspeed,winddir, lat, lon, visibility, sunrise, sunset, clouds, timezone}: WeatherViewInfos) {
+export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description, humidity, windspeed,winddir, lat, lon, visibility, sunrise, sunset, clouds, timezone, geodata}: WeatherViewInfos) {
   return(
     <>
       <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" />
@@ -164,7 +164,13 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
           <div className="flex-ver city-infos-view" style={{width: '100%'}}>
             <h3 className='weather-view-cityname' style={{textAlign: 'left', width: '100%'}}>Informações de {cityname}</h3>
             <div className="flex hor-align" style={{width: '100%'}}>
-                <b style={{textAlign: 'left', width: '100%'}}>País: {countryNames[country.toUpperCase()]?countryNames[country.toUpperCase()].name || country:country.toUpperCase()}</b>
+                <b style={{textAlign: 'left', width: '100%'}}>Província: {geodata?.principalSubdivision}</b>
+            </div>
+            <div className="flex hor-align" style={{width: '100%'}}>
+                <b style={{textAlign: 'left', width: '100%'}}>País: {geodata?.countryName}</b>
+            </div>
+            <div className="flex hor-align" style={{width: '100%'}}>
+                <b style={{textAlign: 'left', width: '100%'}}>Continente: {geodata?.continent}</b>
             </div>
             <div className="flex hor-align" style={{width: '100%'}}>
                 <b style={{textAlign: 'left', width: '100%'}}>Horário Local: {timelocal} (UTC&nbsp;{timezone/3600})</b>
@@ -184,6 +190,9 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
                     <b style={{textAlign: 'left', width: '100%'}}>Código de Telefone: +{countryNames[country.toUpperCase()].phoneCode}</b>:
                     null
                   }
+            </div>
+            <div className="flex hor-align" style={{width: '100%'}}>
+                
             </div>
           </div>
         </div>
