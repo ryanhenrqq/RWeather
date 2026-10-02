@@ -8,6 +8,12 @@ import officeIcon from '../../assets/office-building.png'
 import historyIcon from '../../assets/history.png'
 import sunsetSky from '../../assets/sunset-sky.jpg'
 import logo from '../../favicon.png'
+import tearIcon from '../../assets/humidity.png'
+import windIcon from '../../assets/windy.png'
+import eyeIcon from '../../assets/view.png'
+import upIcon from '../../assets/up.png'
+import downIcon from '../../assets/down.png'
+import cloudsIcon from '../../assets/cloud.png'
 import { useEffect, useState } from 'react'
 import { countryNames } from '../../types/codes'
 
@@ -99,39 +105,59 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
         <div className="flex-hor-align weather-view-top">
           <div className="flex-ver weather-view-left">
             <div className='flex-hor-align'>
-              <b className='weather-view-temperature'>{temperature}</b>
+              <b className='weather-view-temperature'>
+                {country!='US'?temperature:Math.trunc(Number(temperature)*9/5+32)}
+                </b>
               <div className="flex-ver weather-view-temperature-symbols">
                 <b>O</b>
-                <b>C</b>
+                <b>{country!='US'?`C`:`F`}</b>
               </div>
               <div className="flex-ver weather-view-temperature-symbols">
-                <b>+{maxtemp}°</b>
-                <b>-{mintemp}°</b>
+                <b>
+                  <img src={upIcon} alt="Maxima" className='tiny-icons-info' />
+                  <span>
+                    {country!='US'?maxtemp:Math.trunc(Number(maxtemp)*9/5+32)}°
+                    </span>
+                </b>
+                <b>
+                  <img src={downIcon} alt="Minima" className='tiny-icons-info' />
+                  <span>{country!='US'?mintemp:Math.trunc(Number(mintemp)*9/5+32)}°</span>
+                </b>
               </div>
             </div>
             
             <div style={{width: '100%'}} className='flex-ver'>
-              <b style={{textAlign: 'left', width: '100%'}}>Sensação de {feelslike}°</b>
-              <b style={{textAlign: 'left', width: '100%'}}>Temperatura em {Math.trunc(Number(temperature)*9/5+32)}°F</b>
+              <b style={{textAlign: 'left', width: '100%'}}>Sensação de {country!='US'?feelslike:Math.trunc(Number(feelslike)*9/5+32)}°</b>
+              <b style={{textAlign: 'left', width: '100%'}}>Temperatura em 
+                {country!='US'?`${Math.trunc(Number(temperature)*9/5+32)}°F`:`${temperature}°C`}
+                </b>
             </div>
           </div>
 
           <div className="flex-ver city-infos-view" style={{width: '100%'}}>
             <h3 className='weather-view-cityname' style={{textAlign: 'left', width: '100%'}}>{description}</h3>
             <div className="flex-hor-align" style={{width: '100%'}}>
-              <b style={{textAlign: 'left', width: '100%'}}><b>{timelocal}</b> - {cityname} -&nbsp;
+              <b style={{textAlign: 'left', width: '100%'}}><b>{timelocal}</b>&nbsp;-&nbsp;{cityname}&nbsp;-&nbsp;
               {country}
               </b>
             </div>
-            <div className="flex hor-align" style={{width: '100%'}}>
-                <b style={{textAlign: 'left', width: '100%'}}>Humidade: {humidity}%&nbsp;-&nbsp;
+            <div className="flex-hor-align" style={{width: '100%'}}>
+                <b style={{textAlign: 'left', width: '100%'}}>
+                  <img src={tearIcon} alt="Humidade" className='tiny-icons-info' />
+                   {humidity}%&nbsp;-&nbsp;
                 {humidity>45?<span>Alto</span>:<span>Baixo</span>}</b>
             </div>
             <div className="flex-hor-align" style={{width: '100%'}}>
-                <b style={{textAlign: 'left', width: '100%'}}>Força do vento: {windspeed} km/h&nbsp;{windspeed>20?<span>(Forte)</span>:<span>(Leve)</span>} ({winddir}°)</b>
+                <b style={{textAlign: 'left', width: '100%'}}>
+                  <img src={windIcon} alt="Vento" className='tiny-icons-info' />
+                  {country!='US'?`${windspeed} km/h`:`${Math.trunc(windspeed*0.621371)} mph`}
+                  &nbsp;{windspeed>20?<span>(Forte)</span>:<span>(Leve)</span>}&nbsp;({winddir}°)</b>
             </div> 
             <div className="flex-hor-align" style={{width: '100%'}}>
-                <b style={{textAlign: 'left', width: '100%'}}>Visibilidade: {Math.trunc(visibility/1000)} Km&nbsp;-&nbsp;Nuvens: {clouds}%</b>
+                <b style={{textAlign: 'left', width: '100%'}}>
+                  <img src={eyeIcon} alt="Visibilidade" className='tiny-icons-info' />
+                  {country!='US'?`${Math.trunc(visibility/1000)} km`:`${Math.trunc((visibility/1000)*0.621371)} mi`}
+                  &nbsp;-&nbsp;<img src={cloudsIcon} alt="Nuvens" className='tiny-icons-info' /> {clouds}%</b>
             </div> 
             <div className="flex-hor-align" style={{width: '100%'}}>
                 {Number(temperature)<5?

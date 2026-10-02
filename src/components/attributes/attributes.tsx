@@ -13,6 +13,12 @@ export function Attributes() {
             <li><a href="https://www.flaticon.com/free-icons/building" title="building icons">Building icons created by Magnific - Flaticon</a></li>
             <li><a href="https://www.flaticon.com/free-icons/history" title="history icons">History icons created by raanpooo - Flaticon</a></li>
             <li><a href="https://unsplash.com/pt-br/fotografias/deserto-sob-ceu-estrelado-S5uV7ro4UPY?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink">Deserto sob céu estrelado (Mohammad Alizade) - Unsplash</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/humidity" title="humidity icons">Humidity icons created by Fantasyou - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/wind" title="wind icons">Wind icons created by Nendra Wahyu  - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/visibility" title="visibility icons">Visibility icons created by Magnific - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/arrows" title="arrows icons">Arrows icons created by hqrloveq - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/up-arrow" title="up arrow icons">Up arrow icons created by hqrloveq - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/technology" title="technology icons">Technology icons created by meaicon - Flaticon</a></li>
           </ul>
         </footer>
     )
