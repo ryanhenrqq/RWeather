@@ -14,8 +14,10 @@ import eyeIcon from '../../assets/view.png'
 import upIcon from '../../assets/up.png'
 import downIcon from '../../assets/down.png'
 import cloudsIcon from '../../assets/cloud.png'
+import diceIcon from '../../assets/dice.png'
 import { useEffect, useState } from 'react'
 import { countryNames } from '../../types/codes'
+import { getRandomPresetLocation } from '../../types/codes'
 
 export function CleanView({onSearch}: CleanViewNames) {
     const [recentSearch, setRecentSearch] = useState<string[]>([])
@@ -38,6 +40,7 @@ export function CleanView({onSearch}: CleanViewNames) {
     <>
         <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" style={{filter:'brightness(0.7)'}} />
         <div className="clean-view-top">
+          <div className="clean-view-top-hor">
             <div className="flex-hor-align clean-view">
                 <img src={officeIcon} alt="Prédio" loading='lazy' />
                 <div className="flex-ver">
@@ -45,6 +48,7 @@ export function CleanView({onSearch}: CleanViewNames) {
                     <p>Use o campo de pesquisa acima.</p>
                 </div>
             </div>
+
             <div className="flex-hor-align clean-view-recent">
                 <img src={historyIcon} style={{filter: 'invert(1)'}} alt="Histórico" loading='lazy' />
                 <div className="flex-ver">
@@ -58,6 +62,17 @@ export function CleanView({onSearch}: CleanViewNames) {
                     }
                 </div>
             </div>
+          </div>
+
+          <div className="flex-hor-align clean-view-randon">
+              <img src={diceIcon} alt="Dado" loading='lazy' />
+              <div className="flex-ver">
+                  <h3>Conhecer um lugar do mundo?</h3>
+                  <button onClick={() => handleSearch(getRandomPresetLocation().name)} className='recent-li' style={{fontSize:'30px'}}>Sortear</button>
+                  <small>Função experimental e ainda em desenvolvimento. Fique atento ao limite de requisições!</small>
+              </div>
+          </div>
+
         </div>
       
     </>
@@ -79,7 +94,15 @@ export function LoadingInfos() {
   )
 }
 
-export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description, humidity, windspeed,winddir, lat, lon, visibility, sunrise, sunset, clouds, timezone, geodata}: WeatherViewInfos) {
+export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp, feelslike, country, description, humidity, windspeed,winddir, lat, lon, visibility, sunrise, sunset, clouds, timezone, geodata, onSearch}: WeatherViewInfos) {
+    const handleSearch = () => {
+        console.log("click - random chooser")
+        const city = getRandomPresetLocation().name
+        if (!city.trim()) return
+        console.log(city)
+        onSearch(city)      // descobrir como limpar o campo de pesquisa apos a funçao dar certo sem afetar aqui!!
+    }
+
   return(
     <>
       <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" />
@@ -226,6 +249,23 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
           </div>
         </div>
 
+        <div className="weather-view-top flex-ver">
+          <div className="flex-hor-align">
+                  <img src={logo} alt="Sol - Logo"
+                    style={{
+                        width:'28px',
+                        height:'28px',
+                        objectFit:'cover',
+                        marginRight:'10px',
+                        filter:'invert(1)'
+                      }}
+                    />
+                  <b style={{fontSize:'22px'}}>Gostou? Sorteie um lugar aleatório no mundo para conhecer!</b>
+          </div>
+          <button onClick={handleSearch} className='recent-li' style={{fontSize:'30px'}}>Sortear</button>
+          <small>Função experimental e ainda em desenvolvimento. Fique atento ao limite de requisições!</small>
+        </div>
+
         <div className="weather-view-top flex-hor align">
             <img src={logo} alt="Sol - Logo"
              style={{
@@ -241,7 +281,7 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
                 fontSize:'11px'
               }}
             >Fontes de OpenWeatherMap (Clima) e BigDataCloud (Geolocalização)<br />Feito por <a href="https://www.github.com/ryanhenrqq">Ryan Henrique</a></b>
-          </div>
+        </div>
       </div>
     </>
   )

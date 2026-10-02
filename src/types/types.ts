@@ -76,6 +76,7 @@ export interface WeatherViewInfos{
     clouds: number,
     timezone: number,
     geodata: GeoSearchData|null,
+    onSearch: (city:string) => void
 }
 
 export interface CleanViewNames{

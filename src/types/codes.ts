@@ -137,3 +137,25 @@ export const countryNames: Record<string, CountryInfo> = {
         phoneCode:509
     },
 }
+
+const coolLocs = [
+    { name: "Tóquio", lat: 35.6762, lon: 139.6503 },
+    { name: "Nova York", lat: 40.7128, lon: -74.0060, },
+    { name: "Paris", lat: 48.8566, lon: 2.3522 },
+    { name: "Sydney", lat: -33.8688, lon: 151.2093 },
+    { name: "Cairo", lat: 30.0444, lon: 31.2357 },
+    { name: "Reykjavik", lat: 64.1466, lon: -21.9426 },
+
+    { name: "Longyearbyen", lat: 78.2232, lon: 15.6267 },
+    { name: "Ushuaia", lat: -54.8019, lon: -68.3030 },
+    { name: "Chefchaouen", lat: 35.1688, lon: -5.2636 },
+    { name: "Oymyakon", lat: 63.4641, lon: 142.7737 },
+    { name: "Timbuktu", lat: 16.7666, lon: -3.0026 },
+    { name: "Queenstown", lat: -45.0312, lon: 168.6626 },
+    { name: "Nuuk", lat: 64.1836, lon: -51.7216 },
+]
+
+export function getRandomPresetLocation() {
+    const randomIndex = Math.floor(Math.random() * coolLocs.length);
+    return coolLocs[randomIndex];
+}

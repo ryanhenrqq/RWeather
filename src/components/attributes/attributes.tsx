@@ -22,6 +22,7 @@ export function Attributes() {
                 <a href="https://www.flaticon.com/free-icons/arrows" title="arrows icons">Arrows icons created by hqrloveq - Flaticon</a>
                 <a href="https://www.flaticon.com/free-icons/up-arrow" title="up arrow icons">Up arrow icons created by hqrloveq - Flaticon</a>
                 <a href="https://www.flaticon.com/free-icons/technology" title="technology icons">Technology icons created by meaicon - Flaticon</a>
+                <a href="https://www.flaticon.com/free-icons/random" title="random icons">Random icons created by Nsit - Flaticon</a>
             </div>
           </div>
         </footer>
