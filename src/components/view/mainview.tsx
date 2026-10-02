@@ -99,7 +99,7 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
             style={{
               fontSize:'28px'
             }}
-          >Agora em {cityname.toLowerCase()}</b>
+          >Agora em {cityname} (às {timelocal})</b>
         </div>
 
         <div className="flex-hor-align weather-view-top">
@@ -127,8 +127,8 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
             </div>
             
             <div style={{width: '100%'}} className='flex-ver'>
-              <b style={{textAlign: 'left', width: '100%'}}>Sensação de {country!='US'?feelslike:Math.trunc(Number(feelslike)*9/5+32)}°</b>
-              <b style={{textAlign: 'left', width: '100%'}}>Temperatura em 
+              <b style={{textAlign: 'left', width: '100%'}}>Sensação de&nbsp;{country!='US'?feelslike:Math.trunc(Number(feelslike)*9/5+32)}°</b>
+              <b style={{textAlign: 'left', width: '100%'}}>Temperatura em&nbsp;
                 {country!='US'?`${Math.trunc(Number(temperature)*9/5+32)}°F`:`${temperature}°C`}
                 </b>
             </div>
@@ -156,7 +156,7 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
             <div className="flex-hor-align" style={{width: '100%'}}>
                 <b style={{textAlign: 'left', width: '100%'}}>
                   <img src={eyeIcon} alt="Visibilidade" className='tiny-icons-info' />
-                  {country!='US'?`${Math.trunc(visibility/1000)} km`:`${Math.trunc((visibility/1000)*0.621371)} mi`}
+                  {country!='US'?`${Math.trunc(visibility/1000).toFixed(1)} km`:`${Math.trunc((visibility/1000)*0.621371).toFixed(1)} mi`}
                   &nbsp;-&nbsp;<img src={cloudsIcon} alt="Nuvens" className='tiny-icons-info' /> {clouds}%</b>
             </div> 
             <div className="flex-hor-align" style={{width: '100%'}}>
@@ -225,6 +225,23 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
             </div>
           </div>
         </div>
+
+        <div className="weather-view-top flex-hor align">
+            <img src={logo} alt="Sol - Logo"
+             style={{
+                width:'20px',
+                height:'20px',
+                objectFit:'cover',
+                marginRight:'10px',
+                filter:'invert(1)'
+              }}
+            />
+            <b
+              style={{
+                fontSize:'11px'
+              }}
+            >Fontes de OpenWeatherMap (Clima) e BigDataCloud (Geolocalização)<br />Feito por <a href="https://www.github.com/ryanhenrqq">Ryan Henrique</a></b>
+          </div>
       </div>
     </>
   )
