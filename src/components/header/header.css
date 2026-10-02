@@ -22,6 +22,13 @@ header div{
   justify-content: center;
   align-items: center;
 }
+.attributes-link{width: 100%; margin-bottom: 20px;}
+.attributes-link div div{
+  width: 100%;
+}
+.attributes-link div div a{
+  font-size: 11px;
+}
 .left-side-header{justify-self: start;}
 .middle-side-header{justify-self: center;}
 .right-side-header{justify-self: end;}
@@ -64,11 +71,11 @@ header div{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 18rem;
+    width: 20rem;
     position: fixed;
     top: 70px;
     right: 30px;
-    padding: 18px;
+    padding: 10px;
     background-color: #212121a9;
     color: #fff;
     border: solid 1px black;
@@ -76,7 +83,7 @@ header div{
     z-index: 2;
 }
 .info-tab div {
-  width: 80%;
+  width: 90%;
   line-break:strict;
 }
 .info-tab a{
@@ -113,5 +120,10 @@ header div{
         width: 13px;
         height: 13px;
         padding: 4px;
+    }
+    .info-tab{
+      top: 60px;
+      right: 10px;
+      width: 17rem;
     }
 }

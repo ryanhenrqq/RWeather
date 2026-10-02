@@ -141,7 +141,6 @@ function InfosAbout() {
         <div className="info-tab">
             <div>
                 <Attributes />
-                <b>Criado por Ryan Henrique</b>
                 <button onClick={handleSearchEraser}>{clearTxt}</button>
             </div>
         </div>
