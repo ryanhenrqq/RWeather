@@ -15,12 +15,39 @@ import upIcon from '../../assets/up.png'
 import downIcon from '../../assets/down.png'
 import cloudsIcon from '../../assets/cloud.png'
 import diceIcon from '../../assets/dice.png'
+import worldIcon from '../../assets/travel.png'
 import { useEffect, useState } from 'react'
 import { countryNames } from '../../types/codes'
 import { getRandomPresetLocation } from '../../types/codes'
 
 export function CleanView({onSearch, onLoading, onLoadingFail, geolocPerms}: CleanViewNames) {
     const [recentSearch, setRecentSearch] = useState<string[]>([])
+    const [fahMeas, setFahMeas] = useState('')
+    const [celMeas, setCelMeas] = useState('')
+
+    const handleCetofah = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const clean = e.target.value.replace(/[^0-9]/g, '')
+      setCelMeas(clean)
+
+      if(celMeas===''){
+        setFahMeas('')
+      } else {
+        const res = Math.trunc((Number(clean) * 9 / 5) + 32)
+        setFahMeas(String(res))
+      }
+    }
+
+    const handleFahtoce = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const clean = e.target.value.replace(/[^0-9]/g, '')
+      setFahMeas(clean)
+
+      if(fahMeas===''){
+        setCelMeas('')
+      } else {
+        const res = Math.trunc((Number(clean) - 32) * 5 / 9)
+        setCelMeas(String(res))
+      }
+    }
 
     const handleSearch = (city: string) => {
         console.log("click - cleanview history")
@@ -114,6 +141,58 @@ export function CleanView({onSearch, onLoading, onLoadingFail, geolocPerms}: Cle
                 <h3>Conhecer um lugar do mundo?</h3>
                 <button onClick={() => handleSearch(getRandomPresetLocation().name)} className='recent-li' style={{fontSize:'30px'}}>Sortear</button>
                 <small>Função experimental e ainda em desenvolvimento. Fique atento ao limite de requisições!</small>
+              </div>
+            </div>
+          </div>
+
+
+          <div className="clean-view-top-hor">
+            <div className="flex-hor-align clean-view-recent">
+              <img src={worldIcon} alt="Mundo com um avião" loading='lazy' />
+              <div className="flex-ver">
+                <h3>Conversor de medidas</h3>
+                  
+                  <div>
+                    <input type="text" placeholder='Fahrenheits' className='clean-view-converter-in'
+                    maxLength={3}
+                    value={fahMeas}
+                    onChange={handleFahtoce} onKeyDown={(e) => {
+                      if (e.key==="Backspace"){
+                        e.preventDefault()
+                        setCelMeas('')
+                        setFahMeas('')
+                      }
+                    }} />
+                  </div>
+                  <div>
+                    <input type="text" placeholder='Celsius' className='clean-view-converter-in'
+                    maxLength={2}
+                    value={celMeas}
+                    onChange={handleCetofah} onKeyDown={(e) => {
+                      if (e.key==="Backspace"){
+                        e.preventDefault()
+                        setFahMeas('')
+                        setCelMeas('')
+                      }
+                    }} />
+                  </div>
+                  
+              </div>
+            </div>
+            <div className="flex-hor-align clean-view-randon">
+              <img src={logo} alt="Sol" loading='lazy' style={{
+                width:'20px',
+                height:'20px',
+                objectFit:'cover',
+                marginRight:'10px',
+                filter:'invert(1)'
+              }} />
+              <div className="flex-ver">
+                <b
+                  style={{
+                    fontSize:'11px'
+                  }}
+                >Fontes de OpenWeatherMap (Clima) e BigDataCloud (Geolocalização)<br />Feito por <a href="https://www.github.com/ryanhenrqq">Ryan Henrique</a></b>
               </div>
             </div>
           </div>
