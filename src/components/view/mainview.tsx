@@ -155,6 +155,7 @@ export function CleanView({onSearch, onLoading, onLoadingFail, geolocPerms}: Cle
                   <div>
                     <input type="text" placeholder='Fahrenheits' className='clean-view-converter-in'
                     maxLength={3}
+                    inputMode='numeric'
                     value={fahMeas}
                     onChange={handleFahtoce} onKeyDown={(e) => {
                       if (e.key==="Backspace"){
@@ -167,6 +168,7 @@ export function CleanView({onSearch, onLoading, onLoadingFail, geolocPerms}: Cle
                   <div>
                     <input type="text" placeholder='Celsius' className='clean-view-converter-in'
                     maxLength={2}
+                    inputMode='numeric'
                     value={celMeas}
                     onChange={handleCetofah} onKeyDown={(e) => {
                       if (e.key==="Backspace"){
