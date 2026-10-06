@@ -11,7 +11,7 @@ import gpsIcon from '../../assets/gps.png'
 import closeIcon from '../../assets/close.png'
 import { Attributes } from '../attributes/attributes'
 
-export function Header({onSearch, onBack, onLoading, onLoadingFail, error}: HeaderFunction) {
+export function Header({onSearch, onBack, onLoading, onLoadingFail, error, geolocPerms}: HeaderFunction) {
   const [city, setCity] = useState('')
   const [infosView, setInfosView] = useState(false)
   const [lastLat, setLastLat] = useState(0)
@@ -71,6 +71,7 @@ export function Header({onSearch, onBack, onLoading, onLoadingFail, error}: Head
                 if (lat==0||lon==0) return
                 setLastLat(lat)
                 setLastLon(lon)
+                geolocPerms()
                 handleGeolocationSearch(lat, lon)
             }, (error) => {
                 onLoadingFail()

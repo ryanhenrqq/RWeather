@@ -19,14 +19,57 @@ import { useEffect, useState } from 'react'
 import { countryNames } from '../../types/codes'
 import { getRandomPresetLocation } from '../../types/codes'
 
-export function CleanView({onSearch}: CleanViewNames) {
+export function CleanView({onSearch, onLoading, onLoadingFail, geolocPerms}: CleanViewNames) {
     const [recentSearch, setRecentSearch] = useState<string[]>([])
+    const [onLoadFail, setOnLoadFail] = useState(true)
 
     const handleSearch = (city: string) => {
         console.log("click - cleanview history")
         if (!city.trim()) return
+        if (onLoadFail) return
         console.log(city)
         onSearch(city)      // descobrir como limpar o campo de pesquisa apos a funçao dar certo sem afetar aqui!!
+    }
+
+    const handleGeolocationSearch = async(lat: number, lon: number) => {
+      onLoading()
+      let cityname = ''
+      if (lat==0&&lon==0) return
+      try {
+          const res = await fetch(`https://rweather-alpha.vercel.app/api/weather?lat=${lat}&lon=${lon}`)
+          if (!res.ok){
+              const errData = await res.json()
+              throw new Error(errData.error || 'essas coords não foram encontradas')
+          }
+          const data = await res.json()
+          console.log(data)
+          cityname = String(data[0].name)
+      } catch (err: any) {
+          onLoadingFail()
+          setOnLoadFail(true)
+          console.error(err)
+          return
+      }
+      handleSearch(cityname)
+    }
+
+    const handleGeoCatch = () => {
+        if (navigator.geolocation) { //fins de testes, objetivo de pesquisar sozinho ao entrar no site
+            onLoading()
+            navigator.geolocation.getCurrentPosition((pos) => {
+                const lat = Number(pos.coords.latitude)
+                const lon = Number(pos.coords.longitude)
+                if (lat==0||lon==0) return
+                handleGeolocationSearch(lat, lon)
+            }, (error) => {
+                onLoadingFail()
+                setOnLoadFail(true)
+                console.error(`Erro ao conseguir geoloc: ${error}`)
+            })
+        } else {
+            setOnLoadFail(true)
+            console.log('Geolocation não suportado!')
+        }
     }
 
     useEffect(() => {
@@ -40,39 +83,45 @@ export function CleanView({onSearch}: CleanViewNames) {
     <>
         <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" style={{filter:'brightness(0.7)'}} />
         <div className="clean-view-top">
-          <div className="clean-view-top-hor">
-            <div className="flex-hor-align clean-view">
-                <img src={officeIcon} alt="Prédio" loading='lazy' />
-                <div className="flex-ver">
-                    <h3>Comece pesquisando a sua cidade.</h3>
-                    <p>Use o campo de pesquisa acima.</p>
-                </div>
-            </div>
 
-            <div className="flex-hor-align clean-view-recent">
-                <img src={historyIcon} style={{filter: 'invert(1)'}} alt="Histórico" loading='lazy' />
-                <div className="flex-ver">
-                    <h3>Pesquisas recentes</h3>
-                    {
-                        recentSearch.map((city, index) => (
-                            <li key={index} className='recent-li' onClick={() => handleSearch(city)}>
-                                {city}
-                            </li>
-                        ))
-                    }
-                </div>
+          <div className="flex-hor-align clean-view">
+            <img src={officeIcon} alt="Prédio" loading='lazy' />
+            <div className="flex-ver">
+              <h3>Comece pesquisando a sua cidade.</h3>
+              <p>Use o campo de pesquisa acima.</p>
             </div>
           </div>
 
-          <div className="flex-hor-align clean-view-randon">
+          <div className="clean-view-top-hor">
+            <div className="flex-hor-align clean-view-recent">
+              <img src={historyIcon} style={{filter: 'invert(1)'}} alt="Histórico" loading='lazy' />
+              <div className="flex-ver">
+                <h3>Pesquisas recentes</h3>
+                  {
+                    recentSearch.map((city, index) => (
+                      <li key={index} className='recent-li' onClick={() => handleSearch(city)}>
+                        {city}
+                      </li>
+                    ))
+                  }
+                  {
+                    geolocPerms?
+                      <li className='recent-li' onClick={handleGeoCatch}>
+                        {!geolocPerms?'Erro Interno':'Meu Local'}
+                      </li>:null
+                  }
+                  
+              </div>
+            </div>
+            <div className="flex-hor-align clean-view-randon">
               <img src={diceIcon} alt="Dado" loading='lazy' />
               <div className="flex-ver">
-                  <h3>Conhecer um lugar do mundo?</h3>
-                  <button onClick={() => handleSearch(getRandomPresetLocation().name)} className='recent-li' style={{fontSize:'30px'}}>Sortear</button>
-                  <small>Função experimental e ainda em desenvolvimento. Fique atento ao limite de requisições!</small>
+                <h3>Conhecer um lugar do mundo?</h3>
+                <button onClick={() => handleSearch(getRandomPresetLocation().name)} className='recent-li' style={{fontSize:'30px'}}>Sortear</button>
+                <small>Função experimental e ainda em desenvolvimento. Fique atento ao limite de requisições!</small>
               </div>
+            </div>
           </div>
-
         </div>
       
     </>

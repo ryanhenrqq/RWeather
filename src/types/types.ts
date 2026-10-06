@@ -53,7 +53,8 @@ export interface HeaderFunction{
     onBack: () => void,
     onLoading: () => void,
     onLoadingFail: () => void,
-    error: string
+    error: string,
+    geolocPerms: () => void,
 }
 
 export interface WeatherViewInfos{
@@ -80,5 +81,8 @@ export interface WeatherViewInfos{
 }
 
 export interface CleanViewNames{
-    onSearch: (city: string) => void
+    onSearch: (city: string) => void,
+    onLoading: () => void,
+    onLoadingFail: ()=> void,
+    geolocPerms: boolean,
 }

@@ -17,6 +17,7 @@ function App() {
   const [errStatus, setErrStatus] = useState('')
   const [weathData, setWeathData] = useState<WeatherData | null>(null)
   const [geoData, setGeoData] = useState<GeoSearchData | null>(null)
+  const [geolocPerm, setGeolocPerm] = useState(false)
 
   const handleFetch = async (city: string) => {
     setLoading(true)
@@ -72,13 +73,17 @@ function App() {
     setLoading(false)
     setWeatherview(false)
   }
+
+  const handleGeoLocPerm = ()=>{
+    !geolocPerm?setGeolocPerm(true):setGeolocPerm(false)
+  }
   return (
     <>
-      <Header onBack={handleClear} onSearch={handleFetch} onLoading={()=>setLoading(true)} onLoadingFail={()=>setLoading(false)} error={errStatus} />
+      <Header onBack={handleClear} onSearch={handleFetch} onLoading={()=>setLoading(true)} onLoadingFail={()=>setLoading(false)} error={errStatus} geolocPerms={handleGeoLocPerm} />
       <main>
         {weatherview ? 
               <WeatherView cityname={weathData?.name ?? ''} timelocal={getCityTime(weathData?.timezone ?? 0)} temperature={Math.trunc(weathData?.main?.temp ?? 0)} mintemp={Math.trunc(weathData?.main?.temp_min ?? 0)} maxtemp={Math.trunc(weathData?.main?.temp_max ?? 0)} feelslike={Math.trunc(weathData?.main?.feels_like ?? 0)} country={weathData?.sys.country ?? ''} description={weathData?.weather[0].description ?? ''} humidity={weathData?.main.humidity ?? 0} windspeed={Math.trunc(weathData?.wind?.speed ?? 0)} winddir={weathData?.wind?.deg ?? 0} lat={weathData?.coord.lat ?? 0} lon={weathData?.coord.lon ?? 0} visibility={weathData?.visibility ?? 0} sunrise={ConvertIsoDate(weathData?.sys.sunrise??0, weathData?.timezone??0)} sunset={ConvertIsoDate(weathData?.sys.sunset??0,  weathData?.timezone??0)} clouds={weathData?.clouds.all??0} timezone={weathData?.timezone??0} geodata={geoData} onSearch={handleFetch} /> :
-          !loading ? <CleanView onSearch={handleFetch} /> : <LoadingInfos />
+          !loading ? <CleanView onSearch={handleFetch} onLoading={()=>setLoading(true)} onLoadingFail={()=>setLoading(false)} geolocPerms={geolocPerm} /> : <LoadingInfos />
         }
       </main>
       
