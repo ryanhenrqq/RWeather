@@ -21,12 +21,10 @@ import { getRandomPresetLocation } from '../../types/codes'
 
 export function CleanView({onSearch, onLoading, onLoadingFail, geolocPerms}: CleanViewNames) {
     const [recentSearch, setRecentSearch] = useState<string[]>([])
-    const [onLoadFail, setOnLoadFail] = useState(true)
 
     const handleSearch = (city: string) => {
         console.log("click - cleanview history")
         if (!city.trim()) return
-        if (onLoadFail) return
         console.log(city)
         onSearch(city)      // descobrir como limpar o campo de pesquisa apos a funçao dar certo sem afetar aqui!!
     }
@@ -46,7 +44,6 @@ export function CleanView({onSearch, onLoading, onLoadingFail, geolocPerms}: Cle
           cityname = String(data[0].name)
       } catch (err: any) {
           onLoadingFail()
-          setOnLoadFail(true)
           console.error(err)
           return
       }
@@ -63,11 +60,9 @@ export function CleanView({onSearch, onLoading, onLoadingFail, geolocPerms}: Cle
                 handleGeolocationSearch(lat, lon)
             }, (error) => {
                 onLoadingFail()
-                setOnLoadFail(true)
                 console.error(`Erro ao conseguir geoloc: ${error}`)
             })
         } else {
-            setOnLoadFail(true)
             console.log('Geolocation não suportado!')
         }
     }
