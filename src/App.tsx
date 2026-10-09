@@ -4,7 +4,7 @@ import type { WeatherData, GeoSearchData } from './types/types'
 import { Header } from './components/header/header'
 import { CleanView, WeatherView, LoadingInfos } from './components/view/mainview'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const loadingScreen = document.getElementById("loading-screen")
 if (loadingScreen) {
@@ -18,6 +18,10 @@ function App() {
   const [weathData, setWeathData] = useState<WeatherData | null>(null)
   const [geoData, setGeoData] = useState<GeoSearchData | null>(null)
   const [geolocPerm, setGeolocPerm] = useState(false)
+
+  const handleScrollAdjust = () => {
+    window.scrollTo(0, 0)
+  }
 
   const handleFetch = async (city: string) => {
     setLoading(true)
@@ -57,6 +61,7 @@ function App() {
       console.error(err) // fallback se nao funfar o de baixo
       errStatus==''?setErrStatus(String(err)):console.log('Variável de erro já estava ocupada, pulando.')
     } finally {
+      handleScrollAdjust()
       setLoading(false) // vai pra tela de clima ou volta pro inicio dependendo se deu certo ou nao
     }
   }
@@ -70,6 +75,7 @@ function App() {
   }
 
   const handleClear = () => {
+    handleScrollAdjust()
     setLoading(false)
     setWeatherview(false)
   }
@@ -83,7 +89,7 @@ function App() {
       <main>
         {weatherview ? 
               <WeatherView cityname={weathData?.name ?? ''} timelocal={getCityTime(weathData?.timezone ?? 0)} temperature={Math.trunc(weathData?.main?.temp ?? 0)} mintemp={Math.trunc(weathData?.main?.temp_min ?? 0)} maxtemp={Math.trunc(weathData?.main?.temp_max ?? 0)} feelslike={Math.trunc(weathData?.main?.feels_like ?? 0)} country={weathData?.sys.country ?? ''} description={weathData?.weather[0].description ?? ''} humidity={weathData?.main.humidity ?? 0} windspeed={Math.trunc(weathData?.wind?.speed ?? 0)} winddir={weathData?.wind?.deg ?? 0} lat={weathData?.coord.lat ?? 0} lon={weathData?.coord.lon ?? 0} visibility={weathData?.visibility ?? 0} sunrise={ConvertIsoDate(weathData?.sys.sunrise??0, weathData?.timezone??0)} sunset={ConvertIsoDate(weathData?.sys.sunset??0,  weathData?.timezone??0)} clouds={weathData?.clouds.all??0} timezone={weathData?.timezone??0} geodata={geoData} onSearch={handleFetch} /> :
-          !loading ? <CleanView onSearch={handleFetch} onLoading={()=>setLoading(true)} onLoadingFail={()=>setLoading(false)} geolocPerms={geolocPerm} /> : <LoadingInfos />
+          !loading ? <CleanView onSearch={handleFetch} /> : <LoadingInfos />
         }
       </main>
       

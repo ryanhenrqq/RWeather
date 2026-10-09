@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react'
 import { countryNames } from '../../types/codes'
 import { getRandomPresetLocation } from '../../types/codes'
 
-export function CleanView({onSearch, onLoading, onLoadingFail, geolocPerms}: CleanViewNames) {
+export function CleanView({onSearch}: CleanViewNames) {
     const [recentSearch, setRecentSearch] = useState<string[]>([])
     const [fahMeas, setFahMeas] = useState('')
     const [celMeas, setCelMeas] = useState('')
@@ -56,44 +56,6 @@ export function CleanView({onSearch, onLoading, onLoadingFail, geolocPerms}: Cle
         onSearch(city)      // descobrir como limpar o campo de pesquisa apos a funçao dar certo sem afetar aqui!!
     }
 
-    const handleGeolocationSearch = async(lat: number, lon: number) => {
-      onLoading()
-      let cityname = ''
-      if (lat==0&&lon==0) return
-      try {
-          const res = await fetch(`https://rweather-alpha.vercel.app/api/weather?lat=${lat}&lon=${lon}`)
-          if (!res.ok){
-              const errData = await res.json()
-              throw new Error(errData.error || 'essas coords não foram encontradas')
-          }
-          const data = await res.json()
-          console.log(data)
-          cityname = String(data[0].name)
-      } catch (err: any) {
-          onLoadingFail()
-          console.error(err)
-          return
-      }
-      handleSearch(cityname)
-    }
-
-    const handleGeoCatch = () => {
-        if (navigator.geolocation) { //fins de testes, objetivo de pesquisar sozinho ao entrar no site
-            onLoading()
-            navigator.geolocation.getCurrentPosition((pos) => {
-                const lat = Number(pos.coords.latitude)
-                const lon = Number(pos.coords.longitude)
-                if (lat==0||lon==0) return
-                handleGeolocationSearch(lat, lon)
-            }, (error) => {
-                onLoadingFail()
-                console.error(`Erro ao conseguir geoloc: ${error}`)
-            })
-        } else {
-            console.log('Geolocation não suportado!')
-        }
-    }
-
     useEffect(() => {
         const LastSearches = localStorage.getItem('cities-storage')
         if (LastSearches) {
@@ -125,14 +87,7 @@ export function CleanView({onSearch, onLoading, onLoadingFail, geolocPerms}: Cle
                         {city}
                       </li>
                     ))
-                  }
-                  {
-                    geolocPerms?
-                      <li className='recent-li' onClick={handleGeoCatch}>
-                        {!geolocPerms?'Erro Interno':'Meu Local'}
-                      </li>:null
-                  }
-                  
+                  }     
               </div>
             </div>
             <div className="flex-hor-align clean-view-randon">

@@ -82,7 +82,4 @@ export interface WeatherViewInfos{
 
 export interface CleanViewNames{
     onSearch: (city: string) => void,
-    onLoading: () => void,
-    onLoadingFail: ()=> void,
-    geolocPerms: boolean,
 }
