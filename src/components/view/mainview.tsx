@@ -323,7 +323,7 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
               }
 
             </div>
-            {sentError!=""?<div>{sentError}</div>:null}
+            {sentError!=""?<div>{sentError}</div>:<small>Feedback anônimo, usado apenas para melhorar este projeto.</small>}
           </>:null
           }
           {sent &&
