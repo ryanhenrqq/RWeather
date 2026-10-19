@@ -108,7 +108,8 @@ export function CleanView({onSearch}: CleanViewNames) {
               <div className="flex-ver">
                 <h3>Conversor de medidas</h3>
                   
-                  <div>
+                  <div className='flex-hor-align' style={{gap:'12px'}}>
+                    <b>°F</b>
                     <input type="text" placeholder='Fahrenheits' className='clean-view-converter-in'
                     maxLength={3}
                     inputMode='numeric'
@@ -121,7 +122,8 @@ export function CleanView({onSearch}: CleanViewNames) {
                       }
                     }} />
                   </div>
-                  <div>
+                  <div className='flex-hor-align' style={{gap:'12px'}}>
+                    <b>°C</b>
                     <input type="text" placeholder='Celsius' className='clean-view-converter-in'
                     maxLength={2}
                     inputMode='numeric'

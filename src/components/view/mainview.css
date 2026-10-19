@@ -200,12 +200,17 @@ a{
 
 /*CONVERSOR DE MEDIDAS */
 .clean-view-converter-in{
+    border: none;
     width: 80%;
-    padding: 4px;
-    font-size: 24px;
+    padding: 8px;
+    font-size: 22px;
     margin-top: 6px;
     margin-bottom: 6px;
     border-radius: 20px;
+}
+.clean-view-converter-in:focus{
+    outline: none;
+    border: none;
 }
 
 /* ANIMAÇÕES */
