@@ -1,6 +1,6 @@
 import { supabase } from "./supabase"
 
-type FeedbackAnswer = "sim" | "nao"
+type FeedbackAnswer = "y" | "n"
 
 export async function sendFeedback(
   site: string,
