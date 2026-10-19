@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 
 import type { HeaderFunction } from '../../types/types'
 
-import homeIcon from '../../assets/home.png'
 import infoIcon from '../../assets/info.png'
 import searchIcon from '../../assets/search.png'
 import logo from '../../favicon.png'
@@ -89,7 +88,7 @@ export function Header({onSearch, onBack, onLoading, onLoadingFail, error, geolo
   return (
     <>
       <header>
-        <div className="left-side-header flex-hor-align">
+        <div className="left-side-header flex-hor-align" onClick={onBack}>
           <img src={logo} alt="Logo" />
           <h1>RWeather</h1>
         </div>
@@ -120,7 +119,6 @@ export function Header({onSearch, onBack, onLoading, onLoadingFail, error, geolo
         </div>
         <div className="right-side-header flex-hor-align">
             {showLocSearch? <img src={gpsIcon} alt="Localização" onClick={() => handleGeolocationSearch(lastLat, lastLon)} />:null}
-            <img src={homeIcon} alt="Voltar" onClick={onBack} />
             <img src={!infosView?infoIcon:closeIcon} alt="Info" onClick={handleInfosView} />
         </div>
       </header>
