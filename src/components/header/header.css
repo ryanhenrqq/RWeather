@@ -29,9 +29,23 @@ header div{
 .attributes-link div div a{
   font-size: 11px;
 }
-.left-side-header{justify-self: start;}
-.middle-side-header{justify-self: center;}
-.right-side-header{justify-self: end;}
+.left-side-header{
+    justify-self: start;
+    user-select: none;
+    filter: drop-shadow(0 1px 5px #000);
+}
+.left-side-header:hover{
+    color: #D9D9D9;
+    cursor: pointer;
+}
+.middle-side-header{
+    filter: drop-shadow(0 1px 5px #000);
+    justify-self: center;
+}
+.right-side-header{
+    gap: 12px;
+    justify-self: end;
+}
 .left-side-header img{
   width: 40px;
   height: 40px;
@@ -39,30 +53,35 @@ header div{
   filter: invert(1);
 }
 .middle-side-header input{
-  width: 18rem;
-  padding: 2%;
+    border: none;
+    border-radius: 20px;
+    width: 18rem;
+    font-size: 18px;
+    padding: 9px;
+}
+.middle-side-header input:focus{
+    outline: none;
+    border: none;
 }
 .middle-side-header img{
-  width: 30px;
-  height: 30px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  filter: invert(1);
-  transition: background-color 0.3s linear;
-}
-.right-side-header img {
-  width: 22px;
-  height: 22px;
-  padding: 12px;
-  filter: invert(1);
-  transition: background-color 0.3s linear;
+    background-color: #D4D4D4;
+    width: 22px;
+    height: 22px;
+    padding: 12px;
+    border-radius: 20px;
+    transition: background-color 0.3s linear;
 }
 .middle-side-header img:hover, .right-side-header img:hover {
-  background-color: #fff;
-  filter: invert(0);
+  background-color: #A8A8A8;
   cursor: pointer;
+}
+.right-side-header img {
+    background-color: #D4D4D4;
+    width: 22px;
+    height: 22px;
+    padding: 12px;
+    border-radius: 20px;
+    transition: background-color 0.2s linear;
 }
 
 /* INFO TAB */
@@ -108,7 +127,7 @@ header div{
         height: 18px;
     }
     .middle-side-header input{
-        width: 8rem;
+        width: 9rem;
     }
     .middle-side-header img{
         display: none;
@@ -117,8 +136,8 @@ header div{
         gap: 12px;
     }
     .right-side-header img{
-        width: 13px;
-        height: 13px;
+        width: 16px;
+        height: 16px;
         padding: 4px;
     }
     .info-tab{

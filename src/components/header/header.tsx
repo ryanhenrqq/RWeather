@@ -94,7 +94,7 @@ export function Header({onSearch, onBack, onLoading, onLoadingFail, error, geolo
           <h1>RWeather</h1>
         </div>
         <div className="middle-side-header flex-ver">
-          <div className="flex-hor-align">
+          <div className="flex-hor-align" style={{gap:'10px'}}>
             <input type="text" name="search-bar"  placeholder='Buscar cidades...' value={city} onChange={(e) => setCity(e.target.value)}
                 onKeyDown={(e) =>{
                     if (e.key==="Enter"){
