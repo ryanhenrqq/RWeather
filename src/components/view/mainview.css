@@ -80,6 +80,9 @@ a{
     margin-top: 4px;
     margin-bottom: 4px;
 }
+.city-showcase-top{
+    font-size: 28px;
+}
 
 /* CLEAN VIEW */
 .clean-view-top-hor{
@@ -254,6 +257,37 @@ a{
     }
 }
 
+@media (max-width: 1200px) {
+    .clean-view {
+        width: 75%;
+    }
+    .clean-view-top-hor{
+        width: 80%;
+    }
+    .clean-view-recent, .clean-view-randon{
+        width: 70%;
+    }
+    .weather-view-top{
+        width: 70%;
+    }
+}
+@media (max-width: 990px) {
+    .clean-view {
+        width: 80%;
+        height: 8rem;
+    }
+    .weather-view-top{
+        flex-direction: column;
+        width: 80%;
+    }
+    .clean-view-top-hor{
+        flex-direction: column;
+        width: 100%;
+    }
+    .clean-view-recent, .clean-view-randon{
+        width: 80%;
+    }
+}
 @media (max-width: 768px) {
     .main {
         padding-top: 11vh;
@@ -261,17 +295,6 @@ a{
     }
     .clean-view-top{
         top: 55%;
-    }
-    .clean-view-top-hor{
-        flex-direction: column;
-        width: 100%;
-    }
-    .clean-view {
-        width: 80%;
-        height: 8rem;
-    }
-    .clean-view-recent, .clean-view-randon{
-        width: 80%;
     }
     .clean-view img {
         width: 50px;
@@ -291,9 +314,11 @@ a{
         padding-top: 12px;
         padding-bottom: 12px;
     }
-    .weather-view-top{
-        flex-direction: column;
-        width: 80%;
+    .city-showcase-top{
+        font-size: 20px;
+    }
+    .weather-view{
+        gap: 10px;
     }
     .weather-view-temperature{
         font-size: 64px;

@@ -218,11 +218,7 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
               filter:'invert(1)'
             }}
           />
-          <b
-            style={{
-              fontSize:'28px'
-            }}
-          >Agora em {cityname} (às {timelocal})</b>
+          <b className='city-showcase-top'>Agora em {cityname} (às {timelocal})</b>
         </div>
 
         <div className="flex-hor-align weather-view-top">
