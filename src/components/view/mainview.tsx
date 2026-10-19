@@ -4,6 +4,7 @@ import { MapContainer, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 
 import type { WeatherViewInfos, CleanViewNames } from '../../types/types'
+import { sendFeedback } from '../../lib/feedback.ts'
 import officeIcon from '../../assets/office-building.png'
 import historyIcon from '../../assets/history.png'
 import sunsetSky from '../../assets/sunset-sky.jpg'
@@ -183,6 +184,23 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
         onSearch(city)      // descobrir como limpar o campo de pesquisa apos a funçao dar certo sem afetar aqui!!
     }
 
+    const [sent, setSent] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [sentError, setSentError] = useState<string>('')
+    async function handleFeedback(answer: "y" | "n") {
+      setLoading(true);
+
+      try {
+        await sendFeedback("rweather-info-feedback", "/home", answer)
+        setSent(true)
+      } catch {
+        console.error("Erro: Há uma barreira entre o banco de dados e o cliente.")
+        setSentError("O banco de dados está inacessivel agora, Tente mais tarde.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
   return(
     <>
       <img src={sunsetSky} className='clean-view-backg' alt="Pôr do sol" />
@@ -275,6 +293,46 @@ export function WeatherView({cityname, timelocal, temperature, mintemp, maxtemp,
                 }
             </div> 
           </div>
+        </div>
+
+        <div className="weather-view-top flex-ver">
+          {!sent?
+          <>
+            <div className="flex-hor-align" style={{gap:'12px'}}>
+              <img src={logo} alt="Sol - Logo"
+                style={{
+                  width:'28px',
+                  height:'28px',
+                  objectFit:'cover',
+                  marginRight:'10px',
+                  filter:'invert(1)'
+                }}/>
+                <b style={{fontSize:'22px'}}>Essas informações foram úteis?</b>
+                {!loading? 
+                  sentError==''?
+                  <div className='flex-hor-align' style={{gap:'12px'}}>
+                    <button className='recent-li' style={{fontSize:'30px'}} disabled={loading} onClick={() => handleFeedback("y")}>Sim</button>
+                    <button className='recent-li' style={{fontSize:'30px'}} disabled={loading} onClick={() => handleFeedback("n")}>Não</button>
+                  </div>
+                  :null
+                :
+
+                  <div className='flex-hor-align' style={{gap:'12px', display:'flex', justifyContent:'center',alignItems:'center'}}>
+                    <b>Enviando</b>
+                  </div>
+              }
+
+            </div>
+            {sentError!=""?<div>{sentError}</div>:null}
+          </>:null
+          }
+          {sent &&
+            <>
+              <div className='flex-hor-align' style={{gap:'12px'}}>
+                <b>Obrigado pelo feedback!</b>
+              </div>
+            </>
+          }
         </div>
 
         <div className="flex-hor-align weather-view-top">
