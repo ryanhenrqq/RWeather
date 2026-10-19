@@ -4,7 +4,7 @@ import type { WeatherData, GeoSearchData } from './types/types'
 import { Header } from './components/header/header'
 import { CleanView, WeatherView, LoadingInfos } from './components/view/mainview'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const loadingScreen = document.getElementById("loading-screen")
 if (loadingScreen) {
