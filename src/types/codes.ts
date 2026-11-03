@@ -3,6 +3,8 @@ interface CountryInfo{
     phoneCode:number,
 } // feature: adicionar um de moeda e de iso de moeda
 //   lista salva no firefox
+
+// priorizar deixar esse banco de dados maior, evitando uso desnecessario de api - portfolio ja foi provado :)
 export const countryNames: Record<string, CountryInfo> = {
     BR: {
         name:'Brasil',
